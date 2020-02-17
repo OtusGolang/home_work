@@ -1,0 +1,59 @@
+language: go
+
+go:
+  - 1.13.x
+
+os:
+  - linux
+
+git:
+  depth: 1
+  quiet: true
+  submodules: false
+
+notifications:
+  email: false
+
+env:
+  global:
+    - GO111MODULE=on
+    - GOPROXY=https://proxy.golang.org
+
+before_install:
+  - export BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
+  - echo "current branch is ${BRANCH}"
+  - ls ${BRANCH} && cd ${BRANCH}
+
+jobs:
+  include:
+    - stage: "Tests"
+      name: "go get"
+      install: echo "dummy"
+      script: go get "github.com/${TRAVIS_PULL_REQUEST_SLUG}/${BRANCH}"
+
+    - stage: "Tests"
+      name: "Linters"
+      install: go install github.com/golangci/golangci-lint/cmd/golangci-lint
+      script: golangci-lint run ./...
+      if: branch != hw12_13_14_15_calendar
+
+    - stage: "Tests"
+      name: "Unit tests"
+      install: go mod download
+      script: go test -count=1 -race -gcflags=-l ./...
+      if: branch != hw12_13_14_15_calendar
+
+    - stage: "Tests"
+      name: "Bash tests"
+      install: echo "dummy"
+      script: ./test.sh
+      if: |
+        env(BRANCH) IN (hw07_file_copying,  \
+                        hw08_envdir_tool,   \
+                        hw11_telnet_client)
+
+    - stage: "Tests"
+      name: "Makefile"
+      install: go mod download
+      script: make lint && make test && make build
+      if: env(BRANCH) = hw12_13_14_15_calendar

@@ -1,0 +1,13 @@
+run:
+  tests: false
+
+linters:
+  disable-all: false
+  enable-all: true
+  disable:
+    - gochecknoglobals
+    - gochecknoinits
+    - godox
+    - lll
+    - nakedret
+    - wsl

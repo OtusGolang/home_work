@@ -1,0 +1,27 @@
+Go
+Documents
+Packages
+The Project
+Help
+Blog
+Play
+Search
+
+Getting Started
+Install the Go tools
+Test your installation
+Installing extra Go versions
+Uninstalling Go
+Getting help
+Download the Go distribution
+Download Go
+Click here to visit the downloads page
+Official binary distributions are available for the FreeBSD (release 10-STABLE and above), Linux, macOS (10.10 and above), and Windows operating systems and the 32-bit (386) and 64-bit (amd64) x86 processor architectures.
+
+If a binary distribution is not available for your combination of operating system and architecture, try installing from source or installing gccgo instead of gc.
+
+System requirements
+Go binary distributions are available for these supported operating systems and architectures. Please ensure your system meets these requirements before proceeding. If your OS or architecture is not on the list, you may be able to install from source or use gccgo instead.
+
+Operating system	Architectures	Notes
+FreeBSD 10.3 or later	amd64
