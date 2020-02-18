@@ -1,7 +1,43 @@
 language: go
 
 go:
-  - master
+  - 1.13.x
+
+git:
+  depth: 1
+  quiet: true
+  submodules: false
+
+notifications:
+  email: false
 
 env:
-  - GO111MODULE=on
+  - GO111MODULE=on GOBIN=/usr/bin
+
+stages:
+  - name: linters
+    if: env(TRAVIS_PULL_REQUEST_BRANCH) != hw12_13_14_15_calendar
+
+  - name: unit
+    if: env(TRAVIS_PULL_REQUEST_BRANCH) != hw12_13_14_15_calendar
+
+  - name: go_get
+    if: env(TRAVIS_PULL_REQUEST_BRANCH) in (hw1_hello_now, hw7_file_copying, hw8_envdir)
+
+before_script:
+  - cd ${TRAVIS_PULL_REQUEST_BRANCH}
+
+jobs:
+  fast_finish: true
+  include:
+    - stage: linters
+      before_script: go install github.com/golangci/golangci-lint/cmd/golangci-lint
+      script: golangci-lint run -c ./.golangci.yml ./...
+
+    - stage: unit
+      script: go test -count=1 -race ./...
+
+    - stage: go_get
+      script:
+        - go install "github.com/${TRAVIS_PULL_REQUEST_SLUG}/${TRAVIS_PULL_REQUEST_BRANCH}"
+        - ${TRAVIS_PULL_REQUEST_BRANCH}

@@ -1,5 +1,5 @@
 package main
 
-func main()  {
-	print("Hello world!!!")
+func main() {
+	// Put your code here
 }
