@@ -50,15 +50,16 @@ PR обновится в соответствии с одним из [шабло
     * выбрать Default branch - master;
     * добавить новое правило (Branch protection rules -> Add rule):
         * Branch name pattern - `master`;
-        * выставить галочку "Require pull request reviews before merging";
-        * выставить галочку "Require review from Code Owners";
         * выставить галочку "Require status checks to pass before merging";
         * выставить галочку "Require branches to be up to date before merging";
         * выставить галочку "Travis CI - Pull Request";
+        * выставить галочку "Include administrators";
         * нажать кнопку «Create».
 
-* Скинуть ссылку на PR в чат с преподавателем в личном кабинете в OTUS.
-* Пройти ревью и после одобрения пулл реквеста вмержить PR в master.
+* Скинуть ссылку на PR в чат с преподавателем в личном кабинете OTUS.
+* Пройти ревью и **после одобрения пулл реквеста** вмержить PR в master
+(у вас будет доступна кнопка «Merge request» и до момента ответа от преподавателя,
+но стоит сначала дождаться апрува от него).
 * Complete!
 
 Если вы не хотите, чтобы CI запускался на каждый push в ветку, а работал
