@@ -40,8 +40,14 @@ jobs:
     - stage: "Tests"
       name: "Unit tests"
       install: go mod download
-      script: go test -count=1 -race -gcflags=-l ./...
+      script: go test -v -count=1 -race -gcflags=-l -timeout=30s .
       if: branch != hw12_13_14_15_calendar
+
+    - stage: "Tests"
+      name: "Optimization tests"
+      install: go mod download
+      script: go test -v -count=1 -timeout=30s -tags bench .
+      if: branch == hw10_program_optimization
 
     - stage: "Tests"
       name: "Bash tests"

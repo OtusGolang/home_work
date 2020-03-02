@@ -21,7 +21,7 @@ $ git checkout -b hw01_hello_now
 * Проверьте, что следующие команды завершаются успешно:
 ```bash
 $ golangci-lint run ./...
-$ go test -count=1 -race -gcflags=-l ./...
+$ go test -v -count=1 -race -gcflags=-l -timeout=30s .
 $ ./test.sh # При наличии
 ```
 Это те команды, которые запускаются в CI (см. [.travis.yml](./.travis.yml)).
