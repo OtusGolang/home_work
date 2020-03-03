@@ -14,11 +14,11 @@ const (
 	mb          int64 = 1 << 20
 	memoryLimit       = 30 * mb
 
-	timeLimit = 100 * time.Millisecond
+	timeLimit = 140 * time.Millisecond
 )
 
 // go test -v -count=1 -timeout=30s -tags bench .
-// ~70 ms, ~28 Mb
+// Locally ~70 ms, ~28 Mb
 func TestGetDomainStat_Time_And_Memory(t *testing.T) {
 	bench := func(b *testing.B) {
 		data, err := os.Open("testdata/users.dat")
