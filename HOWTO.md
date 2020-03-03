@@ -20,7 +20,7 @@ $ git checkout -b hw01_hello_now
 * Реализуйте код домашнего задания.
 * Проверьте, что следующие команды завершаются успешно:
 ```bash
-$ golangci-lint run ./...
+$ golangci-lint run .
 $ go test -v -count=1 -race -gcflags=-l -timeout=30s .
 $ ./test.sh # При наличии
 ```

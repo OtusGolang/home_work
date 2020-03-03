@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"regexp"
 	"strings"
 )
@@ -42,7 +41,6 @@ func getUsers(r io.Reader) (result users, err error) {
 	for i, line := range lines {
 		var user User
 		if err = json.Unmarshal([]byte(line), &user); err != nil {
-			log.Printf("line: %d %s\n", i, line)
 			return
 		}
 		result[i] = user
