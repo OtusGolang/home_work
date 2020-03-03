@@ -14,7 +14,7 @@ const (
 	mb          int64 = 1 << 20
 	memoryLimit       = 30 * mb
 
-	timeLimit = 200 * time.Millisecond
+	timeLimit = 300 * time.Millisecond
 )
 
 // go test -v -count=1 -timeout=30s -tags bench .
