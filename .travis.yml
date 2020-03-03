@@ -1,7 +1,8 @@
 language: go
 
 go:
-  - 1.13.x
+  - "1.13"
+  - "1.14"
 
 os:
   - linux
@@ -61,5 +62,8 @@ jobs:
     - stage: "Tests"
       name: "Makefile"
       install: go mod download
-      script: make lint && make test && make build
+      script:
+        - make lint
+        - make test
+        - make build
       if: env(BRANCH) = hw12_13_14_15_calendar

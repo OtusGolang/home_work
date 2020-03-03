@@ -1,6 +1,6 @@
 module github.com/fixme_my_friend/hw01_hello_now
 
-go 1.13
+go 1.14
 
 require (
 	bou.ke/monkey v1.0.2
