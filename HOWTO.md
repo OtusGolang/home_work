@@ -73,7 +73,7 @@ PR обновится в соответствии с одним из [шабло
 
 ![master_protection_rules](./img/master_protection_rules.png)
 
-* Скиньте ссылку на PR в чат с преподавателем в личном кабинете OTUS.
+* Скиньте ссылку на PR в чат с преподавателем **в личном кабинете OTUS** (не в Slack).
 
 ![chat_pr](./img/chat_pr.png)
 
