@@ -46,26 +46,80 @@ PR обновится в соответствии с одним из [шабло
 
 * Нажмите кнопку «Create pull request».
 
+* Зайдите на страницу настроек доступа (Settings -> Manage access):
+    * нажмите "Invite a collaborator" и пригласите наставников:
+        - Алексей Бакин **kulti** ;
+        - Антон Телышев **Antonboom** ;
+        - Артём Картасов **agneum** ;
+        - Иван Иванов **orensimple** ;
+        - Кирилл Приходько **imorte** ;
+        - Олег Венгер **farir1408** ;
+        - Юрий Юрочко **forward32** .
+
+Это необходимо для того, чтобы наше ревью в вашем PR имело "вес", а также,
+чтобы мы могли выставлять галочки в критериях оценки :)
+
 * Зайдите на страницу настроек веток репозитория (Settings -> Branches):
     * выбрать Default branch - master;
     * добавить новое правило (Branch protection rules -> Add rule):
-        * Branch name pattern - `master`;
+        * Branch name pattern - `master` (именно так);
+        * выставить галочку "Require pull request reviews before merging";
+            * выставить галочку "Require review from Code Owners";
         * выставить галочку "Require status checks to pass before merging";
         * выставить галочку "Require branches to be up to date before merging";
         * выставить галочку "Travis CI - Pull Request";
         * выставить галочку "Include administrators";
         * нажать кнопку «Create».
 
-* Скинуть ссылку на PR в чат с преподавателем в личном кабинете OTUS.
-* Пройти ревью и **после одобрения пулл реквеста** вмержить PR в master
-(у вас будет доступна кнопка «Merge request» и до момента ответа от преподавателя,
-но стоит сначала дождаться апрува от него).
+![master_protection_rules](./img/master_protection_rules.png)
+
+* Скиньте ссылку на PR в чат с преподавателем в личном кабинете OTUS.
+
+![chat_pr](./img/chat_pr.png)
+
+* Пройдите ревью и **после одобрения пулл реквеста** вмержите PR в master.
+
+![approved_pr](./img/approved_pr.png)
+
 * Complete!
+
+#### Убедительная просьба не мержить реквесты без апрува от проверяющего.
 
 Если вы не хотите, чтобы CI запускался на каждый push в ветку, а работал
 только при пулл реквесте, то снимите галочку "Build pushed branches"
 на странице настроек репозитория в Travis CI
 (https://travis-ci.com/your-user/your-repo/settings).
+
+Также, если вы хотите, чтобы сборка запускалась только для последнего актуального коммита,
+то настройте "Auto Cancellation".
+
+![travis_settings](img/travis_settings.png)
+
+### Обновление master'а своего репозитория
+Базовый репозиторий обновляется (добавляются ДЗ, меняется документация, тесты, фиксятся ошибки и пр.).
+
+Поэтому иногда нужно "руками" притянуть в свой репозиторий новые / обновленные файлы.
+
+Это можно сделать двумя способами:
+1) Включить обновления в текущий PR по домашней работе. Так после слияния они попадут в ваш master.
+2) Обновить самостоятельно свой master и из него уже обновить ветку с ДЗ, например,
+мы обновили `.travis.yml`
+```
+$ git checkout master
+$ cp ~/Downloads/.travis.yml .travis.yml
+$ git commit -am "Update travis config"
+$ git push origin master
+```
+Для этого необходимо временно разрешить администраторам пушить в репозиторий в обход всех проверок,
+т.е. снять галочку "Include administrators" в правиле защиты ветки master (Settings -> Branches).
+**После обновления репозитория галочку стоит вернуть на место :)**
+
+Подтягиваем в ветку обновленный master:
+```
+$ git checkout hw01_hello_now
+$ git pull origin master
+$ git push origin hw01_hello_now
+```
 
 ### Списывание
 Домашние задания нужны **вам**, а не нам. За их невыполнение родителей в школу не вызовут.
