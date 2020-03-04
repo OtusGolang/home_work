@@ -19,6 +19,10 @@ env:
     - GO111MODULE=on
     - GOPROXY=https://proxy.golang.org
 
+branches:
+  except:
+    - master
+
 before_install:
   - export BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
   - echo "current branch is ${BRANCH}"
