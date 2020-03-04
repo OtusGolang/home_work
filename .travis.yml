@@ -19,10 +19,6 @@ env:
     - GO111MODULE=on
     - GOPROXY=https://proxy.golang.org
 
-branches:
-  except:
-    - master
-
 before_install:
   - export BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
   - echo "current branch is ${BRANCH}"
@@ -37,18 +33,21 @@ jobs:
       name: "go get"
       install: echo "dummy"
       script: go get "github.com/${TRAVIS_REPO_SLUG}/${BRANCH}"
+      if: env(BRANCH) != master
 
     - stage: "Tests"
       name: "Linters"
       install: go install github.com/golangci/golangci-lint/cmd/golangci-lint
       script: golangci-lint run .
-      if: env(BRANCH) != hw12_13_14_15_calendar
+      if: env(BRANCH) NOT IN (master,
+                              hw12_13_14_15_calendar)
 
     - stage: "Tests"
       name: "Unit tests"
       install: go mod download
       script: go test -v -count=1 -race -gcflags=-l -timeout=30s .
-      if: env(BRANCH) != hw12_13_14_15_calendar
+      if: env(BRANCH) NOT IN (master,
+                              hw12_13_14_15_calendar)
 
     - stage: "Tests"
       name: "Optimization tests"
