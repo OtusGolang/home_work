@@ -75,11 +75,11 @@ PR обновится в соответствии с одним из [шабло
 
 * Скиньте ссылку на PR в чат с преподавателем **в личном кабинете OTUS** (не в Slack).
 
-![chat_pr](./img/chat_pr.png)
+<img src="./img/chat_pr.png" width="400">
 
 * Пройдите ревью и **после одобрения пулл реквеста** вмержите PR в master.
 
-![approved_pr](./img/approved_pr.png)
+<img src="./img/approved_pr.png" width="500">
 
 * Complete!
 
