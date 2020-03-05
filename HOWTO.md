@@ -71,7 +71,7 @@ PR обновится в соответствии с одним из [шабло
         * выставить галочку "Include administrators";
         * нажать кнопку «Create».
 
-![master_protection_rules](./img/master_protection_rules.png)
+![master_protection](img/master_protection.png)
 
 * Скиньте ссылку на PR в чат с преподавателем **в личном кабинете OTUS** (не в Slack).
 
