@@ -63,6 +63,7 @@ PR обновится в соответствии с одним из [шабло
     * добавить новое правило (Branch protection rules -> Add rule):
         * Branch name pattern - `master` (именно так);
         * выставить галочку "Require pull request reviews before merging";
+            * выставить галочку "Dismiss stale pull request approvals when new commits are pushed";
             * выставить галочку "Require review from Code Owners";
         * выставить галочку "Require status checks to pass before merging";
         * выставить галочку "Require branches to be up to date before merging";
