@@ -7,7 +7,7 @@
 6) «Concurrency» *
 7) [«Утилита для копирования файлов»](./hw07_file_copying)
 8) [«Утилита envdir»](./hw08_envdir_tool)
-9) «Генератор валидаторов» *
+9) [«Генератор валидаторов»](./hw09_generator_of_validators)
 10) [«Оптимизация программы»](./hw10_program_optimization)
 11) [«Клиент TELNET»](./hw11_telnet_client)
 12) [«Заготовка сервиса Календарь»](./hw12_13_14_15_calendar/docs/12_README.md)
