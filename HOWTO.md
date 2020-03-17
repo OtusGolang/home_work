@@ -47,30 +47,32 @@ PR обновится в соответствии с одним из [шабло
 
 * Нажмите кнопку «Create pull request».
 
-* Зайдите на страницу настроек доступа (Settings -> Manage access):
-    * нажмите "Invite a collaborator" и пригласите наставников:
-        - Алексей Бакин **kulti** ;
-        - Антон Телышев **Antonboom** ;
-        - Артём Картасов **agneum** ;
-        - Иван Иванов **orensimple** ;
-        - Олег Венгер **farir1408** ;
-        - Юрий Юрочко **forward32** .
+#### Добавление наставников в репозиторий
+Зайдите на страницу настроек доступа (Settings -> Manage access),
+нажмите "Invite a collaborator" и пригласите наставников:
+- Алексей Бакин **kulti** ;
+- Антон Телышев **Antonboom** ;
+- Артём Картасов **agneum** ;
+- Иван Иванов **orensimple** ;
+- Олег Венгер **farir1408** ;
+- Юрий Юрочко **forward32** .
 
 Это необходимо для того, чтобы наше ревью в вашем PR имело "вес", а также,
 чтобы мы могли выставлять галочки в критериях оценки :)
 
-* Зайдите на страницу настроек веток репозитория (Settings -> Branches):
-    * выбрать Default branch - master;
-    * добавить новое правило (Branch protection rules -> Add rule):
-        * Branch name pattern - `master` (именно так);
-        * выставить галочку "Require pull request reviews before merging";
-            * выставить галочку "Dismiss stale pull request approvals when new commits are pushed";
-            * выставить галочку "Require review from Code Owners";
-        * выставить галочку "Require status checks to pass before merging";
-        * выставить галочку "Require branches to be up to date before merging";
-        * выставить галочку "Travis CI - Pull Request";
-        * выставить галочку "Include administrators";
-        * нажать кнопку «Create».
+#### Защита master-ветки
+Зайдите на страницу настроек веток репозитория (Settings -> Branches):
+* выбрать Default branch - master;
+* добавить новое правило (Branch protection rules -> Add rule):
+    * Branch name pattern - `master` (именно так);
+    * выставить галочку "Require pull request reviews before merging";
+        * выставить галочку "Dismiss stale pull request approvals when new commits are pushed";
+        * выставить галочку "Require review from Code Owners";
+    * выставить галочку "Require status checks to pass before merging";
+    * выставить галочку "Require branches to be up to date before merging";
+    * выставить галочку "Travis CI - Pull Request";
+    * выставить галочку "Include administrators";
+    * нажать кнопку «Create».
 
 ![master_protection](img/master_protection.png)
 
@@ -130,6 +132,15 @@ $ git push origin master
 $ git checkout hw01_hello_now
 $ git pull origin master
 $ git push origin hw01_hello_now
+```
+
+### Настройка линтеров
+Линтеры, которые вас достают и которые лично для вас смысла не
+имеют можно дизейблить в `.golangci.yml`. Но рекомендуется точечно
+использовать `//nolint:<имя_линтера>` на строке с проблемой или (в редких случаях)
+перед всей функцией:
+```golang
+b.WriteString(strings.Repeat(string(lastRune), repeatNumber - 1)) //nolint:gomnd
 ```
 
 ### Списывание

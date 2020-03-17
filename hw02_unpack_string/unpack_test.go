@@ -19,8 +19,13 @@ func TestUnpack(t *testing.T) {
 			expected: "aaaabccddddde",
 		},
 		{
-			input:    "abcd",
-			expected: "abcd",
+			input:    "abccd",
+			expected: "abccd",
+		},
+		{
+			input:    "3abc",
+			expected: "",
+			err:      ErrInvalidString,
 		},
 		{
 			input:    "45",
