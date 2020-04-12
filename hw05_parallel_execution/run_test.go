@@ -30,8 +30,7 @@ func TestRun(t *testing.T) {
 		result := Run(tasks, workersCount, maxErrorsCount)
 
 		require.Equal(t, ErrErrorsLimitExceeded, result)
-		require.LessOrEqual(t,
-			int32(workersCount+maxErrorsCount), runTasksCount, "extra tasks were started")
+		require.LessOrEqual(t, runTasksCount, int32(workersCount+maxErrorsCount), "extra tasks were started")
 	})
 
 	t.Run("tasks without errors", func(t *testing.T) {
@@ -60,7 +59,7 @@ func TestRun(t *testing.T) {
 		elapsedTime := time.Since(start)
 		require.Nil(t, result)
 
-		require.Equal(t, int32(tasksCount), runTasksCount, "not all tasks were completed")
+		require.Equal(t, runTasksCount, int32(tasksCount), "not all tasks were completed")
 		require.LessOrEqual(t, int64(elapsedTime), int64(sumTime/2), "tasks were run sequentially?")
 	})
 }
