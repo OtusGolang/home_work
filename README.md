@@ -18,3 +18,8 @@
 
 ---
 [Инструкция по сдаче ДЗ](https://github.com/OtusGolang/home_work/wiki#%D0%A1%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%B0%D0%BC).
+
+---
+Авторы ДЗ:
+- [Дмитрий Смаль](https://github.com/mialinx)
+- [Антон Телышев](https://github.com/Antonboom)
