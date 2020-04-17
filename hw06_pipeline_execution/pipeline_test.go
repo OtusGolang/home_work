@@ -69,7 +69,8 @@ func TestPipeline(t *testing.T) {
 		// Abort after 200ms
 		abortDur := sleepPerStage * 2
 		go func() {
-			done <- <-time.After(abortDur)
+			<-time.After(abortDur)
+			close(done)
 		}()
 
 		go func() {
