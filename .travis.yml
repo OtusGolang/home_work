@@ -39,29 +39,33 @@ jobs:
       name: "Linters"
       install: go install github.com/golangci/golangci-lint/cmd/golangci-lint
       script: golangci-lint run ./...
-      if: env("BRANCH") != hw12_13_14_15_calendar
+      if: |
+        (type = push AND branch != hw12_13_14_15_calendar) OR \
+        (type = pull_request AND head_branch != hw12_13_14_15_calendar)
 
     - stage: "Tests"
       name: "Unit tests"
       install: go mod download
       script: go test -v -count=1 -race -gcflags=-l -timeout=30s ./...
-      if: env("BRANCH") != hw12_13_14_15_calendar
+      if: |
+        (type = push AND branch != hw12_13_14_15_calendar) OR \
+        (type = pull_request AND head_branch != hw12_13_14_15_calendar)
 
     - stage: "Tests"
       name: "Optimization tests"
       install: go mod download
       script: go test -v -count=1 -timeout=30s -tags bench ./...
-      if: env("BRANCH") = hw10_program_optimization
+      if: |
+        (type = push AND branch == hw10_program_optimization) OR \
+        (type = pull_request AND head_branch == hw10_program_optimization)
 
     - stage: "Tests"
       name: "Bash tests"
       install: echo "skip"
       script: ./test.sh
       if: |
-        env("BRANCH") IN ( \
-        hw07_file_copying, \
-        hw08_envdir_tool, \
-        hw11_telnet_client)
+        (type = push AND branch IN (hw07_file_copying, hw08_envdir_tool, hw11_telnet_client)) OR \
+        (type = pull_request AND head_branch IN (hw07_file_copying, hw08_envdir_tool, hw11_telnet_client))
 
     - stage: "Tests"
       name: "Makefile"
@@ -70,4 +74,6 @@ jobs:
         - make lint
         - make test
         - make build
-      if: env("BRANCH") = hw12_13_14_15_calendar
+      if: |
+        (type = push AND branch == hw12_13_14_15_calendar) OR \
+        (type = pull_request AND head_branch == hw12_13_14_15_calendar)
