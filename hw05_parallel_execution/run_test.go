@@ -8,9 +8,12 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
+	"go.uber.org/goleak"
 )
 
 func TestRun(t *testing.T) {
+	defer goleak.VerifyNone(t)
+
 	t.Run("if were errors in first M tasks, than finished not more N+M tasks", func(t *testing.T) {
 		tasksCount := 50
 		tasks := make([]Task, 0, tasksCount)
@@ -18,10 +21,11 @@ func TestRun(t *testing.T) {
 		var runTasksCount int32
 
 		for i := 0; i < tasksCount; i++ {
+			err := fmt.Errorf("error from task %d", i)
 			tasks = append(tasks, func() error {
 				time.Sleep(time.Millisecond * time.Duration(rand.Intn(100)))
 				atomic.AddInt32(&runTasksCount, 1)
-				return fmt.Errorf("error from task %d", i)
+				return err
 			})
 		}
 
