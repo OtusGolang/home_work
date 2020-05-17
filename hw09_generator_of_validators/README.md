@@ -23,7 +23,7 @@ type User {
 тэг **validate** и генерирует код валидации в файл **models_validation_generated.go**
 (где **models** - имя исходного файла без расширения) в том же пакете, что и исходный файл.
 
-**models_validation.go**:
+**models_validation_generated.go**:
 ```golang
 package models
 
