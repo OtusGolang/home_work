@@ -33,7 +33,7 @@ jobs:
     - stage: "Tests"
       name: "go get"
       install: echo "skip"
-      script: go get "github.com/${TRAVIS_REPO_SLUG}/${BRANCH}"
+      script: cd /tmp && go get "github.com/${TRAVIS_REPO_SLUG}/${BRANCH}@${BRANCH}"
 
     - stage: "Tests"
       name: "Linters"

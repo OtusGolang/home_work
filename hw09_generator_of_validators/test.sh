@@ -2,7 +2,7 @@
 set -xeuo pipefail
 
 rm -f "$(command -v go-validate)"
-rm -f ./models/*validation.go
+rm -f ./models/*generated.go
 
 go install ./go-validate
 go generate models/models.go
