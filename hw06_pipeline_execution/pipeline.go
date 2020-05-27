@@ -1,10 +1,9 @@
 package hw06_pipeline_execution //nolint:golint,stylecheck
 
 type (
-	I   = interface{}
-	In  = <-chan I
+	In  = <-chan interface{}
 	Out = In
-	Bi  = chan I
+	Bi  = chan interface{}
 )
 
 type Stage func(in In) (out Out)

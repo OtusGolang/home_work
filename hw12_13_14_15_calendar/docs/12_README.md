@@ -73,6 +73,8 @@
 * https://github.com/jmoiron/sqlx
 * https://github.com/pressly/goose#go-migrations
 
+**Использовать ORM (например, gorm) не допускается**.
+
 Календарь должен использовать хранилище через интерфейс.
 
 ### 4) Запуск простого HTTP-сервера
