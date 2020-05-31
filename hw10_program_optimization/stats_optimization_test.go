@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	mb          int64 = 1 << 20
-	memoryLimit       = 30 * mb
+	mb          uint64 = 1 << 20
+	memoryLimit uint64 = 30 * mb
 
 	timeLimit = 300 * time.Millisecond
 )
@@ -40,9 +40,9 @@ func TestGetDomainStat_Time_And_Memory(t *testing.T) {
 	}
 
 	result := testing.Benchmark(bench)
-	mem := int64(result.MemBytes) / mb
+	mem := result.MemBytes
 	t.Logf("time used: %s", result.T)
-	t.Logf("memory used: %dMb", mem)
+	t.Logf("memory used: %dMb", mem/mb)
 
 	require.Less(t, int64(result.T), int64(timeLimit), "the program is too slow")
 	require.Less(t, mem, memoryLimit, "the program is too greedy")
