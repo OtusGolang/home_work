@@ -15,7 +15,7 @@ const (
 
 func TestPipeline(t *testing.T) {
 	// Stage generator
-	g := func(name string, f func(v I) I) Stage {
+	g := func(name string, f func(v interface{}) interface{}) Stage {
 		return func(in In) Out {
 			out := make(Bi)
 			go func() {
@@ -30,10 +30,10 @@ func TestPipeline(t *testing.T) {
 	}
 
 	stages := []Stage{
-		g("Dummy", func(v I) I { return v }),
-		g("Multiplier (* 2)", func(v I) I { return v.(int) * 2 }),
-		g("Adder (+ 100)", func(v I) I { return v.(int) + 100 }),
-		g("Stringifier", func(v I) I { return strconv.Itoa(v.(int)) }),
+		g("Dummy", func(v interface{}) interface{} { return v }),
+		g("Multiplier (* 2)", func(v interface{}) interface{} { return v.(int) * 2 }),
+		g("Adder (+ 100)", func(v interface{}) interface{} { return v.(int) + 100 }),
+		g("Stringifier", func(v interface{}) interface{} { return strconv.Itoa(v.(int)) }),
 	}
 
 	t.Run("simple case", func(t *testing.T) {
