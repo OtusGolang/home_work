@@ -26,7 +26,7 @@ func TestGetDomainStat_Time_And_Memory(t *testing.T) {
 		require.NoError(t, err)
 		defer r.Close()
 
-		require.Equal(t, len(r.File), 1)
+		require.Equal(t, 1, len(r.File))
 
 		data, err := r.File[0].Open()
 		require.NoError(t, err)
@@ -36,7 +36,7 @@ func TestGetDomainStat_Time_And_Memory(t *testing.T) {
 		b.StopTimer()
 		require.NoError(t, err)
 
-		require.Equal(t, stat, expectedBizStat)
+		require.Equal(t, expectedBizStat, stat)
 	}
 
 	result := testing.Benchmark(bench)
