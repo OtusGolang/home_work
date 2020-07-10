@@ -1,6 +1,10 @@
 package main
 
-import "net"
+import (
+	"io"
+	"net"
+	"time"
+)
 
 type TelnetClient interface {
 	Connect() error
@@ -9,10 +13,9 @@ type TelnetClient interface {
 	Receive() error
 }
 
-//func NewTelnetClient(address string, timeout time.Duration, in io.ReadCloser, out io.Writer) TelnetClient {
-func NewTelnetClient() TelnetClient {
+func NewTelnetClient(address string, timeout time.Duration, in io.ReadCloser, out io.Writer) TelnetClient {
 	// Place your code here
-	conn, _ := net.Dial("tcp", "0.0.0.0:4242")
+	conn, _ := net.Dial("tcp", address)
 	conn.Write([]byte("Hello Yan"))
 	conn.Close()
 	return nil
