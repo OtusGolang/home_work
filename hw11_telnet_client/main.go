@@ -2,8 +2,9 @@ package main
 
 import (
 	"os"
+	"os/signal"
 	"sync"
-	"time"
+	"syscall"
 )
 
 func main() {
@@ -18,7 +19,9 @@ func main() {
 
 	go func(wg *sync.WaitGroup) {
 		defer wg.Done()
-		time.Sleep(time.Second * 5)
+		c := make(chan os.Signal)
+		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+		<-c
 	}(&wg)
 
 	wg.Wait()
