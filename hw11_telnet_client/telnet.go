@@ -6,7 +6,10 @@ import (
 )
 
 type TelnetClient interface {
-	// Place your code here
+	Connect() error
+	Close() error
+	Send() error
+	Receive() error
 }
 
 func NewTelnetClient(address string, timeout time.Duration, in io.ReadCloser, out io.Writer) TelnetClient {
