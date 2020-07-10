@@ -15,14 +15,15 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(1)
 
-	NewTelnetClient("0.0.0.0:4242", 1, os.Stdin, os.Stdout)
+	tc := NewTelnetClient("0.0.0.0:4242", 1, os.Stdin, os.Stdout)
 
-	go func(wg *sync.WaitGroup) {
+	go func(wg *sync.WaitGroup, tc TelnetClient) {
 		defer wg.Done()
 		c := make(chan os.Signal)
 		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 		<-c
-	}(&wg)
+		tc.Close()
+	}(&wg, tc)
 
 	wg.Wait()
 }
