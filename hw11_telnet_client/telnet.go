@@ -44,7 +44,7 @@ func NopTelnetClient(c net.Conn) TelnetClient {
 
 func NewTelnetClient(address string, timeout time.Duration, in io.ReadCloser, out io.Writer) TelnetClient {
 	// Place your code here
-	conn, err := net.Dial("tcp", address)
+	conn, err := net.DialTimeout("tcp", address, timeout)
 	if err != nil  {
 		fmt.Println("No connection!")
 		return nil
@@ -64,6 +64,8 @@ func NewTelnetClient(address string, timeout time.Duration, in io.ReadCloser, ou
 				log.Fatal(err)
 			}
 		}
+		conn.Close()
+		fmt.Println("Connection is closed due to EOF!")
 	}(conn, in)
 
 	go func(conn net.Conn, out io.Writer) {
