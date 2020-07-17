@@ -10,20 +10,20 @@ nil <- (prev) front <-> ... <-> elem <-> ... <-> back (next) -> nil
 ```
 
 Необходимо реализовать следующий интерфейс List:
-- Len() int                       // длина списка
-- Front() *Item                   // первый Item
-- Back() *Item                    // последний Item
-- PushFront(v interface{}) *Item  // добавить значение в начало
-- PushBack(v interface{}) *Item   // добавить значение в конец
-- Remove(i *Item)                 // удалить элемент
-- MoveToFront(i *Item)            // переместить элемент в начало
+- Len() int                           // длина списка
+- Front() *ListItem                   // первый элемент списка
+- Back() *ListItem                    // последний элемент списка
+- PushFront(v interface{}) *ListItem  // добавить значение в начало
+- PushBack(v interface{}) *ListItem   // добавить значение в конец
+- Remove(i *ListItem)                 // удалить элемент
+- MoveToFront(i *ListItem)            // переместить элемент в начало
 
 **Гарантируется, что методы Remove и MoveToFront вызываются от существующих в списке элементов.**
 
-Элемент списка Item:
+Элемент списка ListItem:
 - Value interface{}  // значение
-- Next *Item         // следующий элемент
-- Prev *Item         // предыдущий элемент
+- Next *ListItem     // следующий элемент
+- Prev *ListItem     // предыдущий элемент
 
 Сложность всех операций должна быть O(1),
 т.е. не должно быть мест, где осуществляется полный обход списка.
@@ -41,6 +41,17 @@ nil <- (prev) front <-> ... <-> elem <-> ... <-> back (next) -> nil
 
 Элемент кэша должен хранить в себе ключ, по которому он лежит в словаре, и само значение.
 Для чего это нужно понятно из алгоритма работы кэша (см. ниже).
+
+Структура кэша на псевдоязыке:
+```
+Cache {
+    queue List<ListItem>
+    cache map[key]ListItem
+}
+, где ListItem.Value -> CacheItem
+                             .Key   -> key
+                             .Value -> int/string/etc.
+```
 
 Алгоритм работы кэша:
 - при добавлении элемента:
