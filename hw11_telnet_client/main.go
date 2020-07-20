@@ -2,8 +2,14 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
+	"os"
+	"os/signal"
 	"strconv"
+	"sync"
+	"syscall"
+	"time"
 )
 
 type Args struct {
@@ -41,19 +47,20 @@ func getArgs() *Args {
 }
 
 func main() {
-	//var wg sync.WaitGroup
-	//wg.Add(1)
-	//
-	//tc := NewTelnetClient("0.0.0.0:4242", 10*time.Second, os.Stdin, os.Stdout)
-	//tc.Connect()
-	//fmt.Printf("%+v\n", tc)
-	//go func(wg *sync.WaitGroup, tc TelnetClient) {
-	//	defer wg.Done()
-	//	c := make(chan os.Signal)
-	//	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-	//	<-c
-	//	tc.Close()
-	//}(&wg, tc)
-	//
-	//wg.Wait()
+	args := getArgs()
+	var wg sync.WaitGroup
+	wg.Add(1)
+
+	tc := NewTelnetClient(args.host + ":" + args.port, time.Duration(args.timeout) * time.Second, os.Stdin, os.Stdout)
+	tc.Connect()
+	fmt.Printf("%+v\n", tc)
+	go func(wg *sync.WaitGroup, tc TelnetClient) {
+		defer wg.Done()
+		c := make(chan os.Signal)
+		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+		<-c
+		tc.Close()
+	}(&wg, tc)
+
+	wg.Wait()
 }
