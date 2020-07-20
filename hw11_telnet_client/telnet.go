@@ -91,42 +91,5 @@ func createTelnetClient(in io.ReadCloser, out io.Writer, address string, timeout
 }
 
 func NewTelnetClient(address string, timeout time.Duration, in io.ReadCloser, out io.Writer) TelnetClient {
-	// Place your code here
-
-	//for x := range time.Tick(time.Second) {
-	//	connection.Write([]byte(fmt.Sprintf("Time: %d", x)))
-	//}
-
-	//go func(conn net.Conn, in io.ReadCloser) {
-	//	scanner := bufio.NewScanner(in)
-	//	scanner.Split(bufio.ScanLines)
-	//	for scanner.Scan() {
-	//		// TODO: put on one line
-	//		_, err = conn.Write(scanner.Bytes())
-	//		conn.Write([]byte("\n"))
-	//		if err != nil {
-	//			log.Fatal(err)
-	//		}
-	//	}
-	//	conn.Close()
-	//	fmt.Println("Connection is closed due to EOF!")
-	//}(conn, in)
-	//
-	//go func(conn net.Conn, out io.Writer) {
-	//	scanner := bufio.NewScanner(conn)
-	//	scanner.Split(bufio.ScanLines)
-	//	for scanner.Scan() {
-	//		// TODO: put on one line
-	//		_, err = out.Write(scanner.Bytes())
-	//		out.Write([]byte("\n"))
-	//		if err != nil {
-	//			log.Fatal(err)
-	//		}
-	//	}
-	//}(conn, out)
-
 	return createTelnetClient(in, out, address, timeout)
 }
-
-// Place your code here
-// P.S. Author's solution takes no more than 50 lines
