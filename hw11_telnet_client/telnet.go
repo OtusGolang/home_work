@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"log"
 	"net"
 	"time"
 )
@@ -40,31 +39,27 @@ func (c client) Close() error {
 func (c client) Send() error {
 	success := c.inScanner.Scan()
 	if success == false {
-		fmt.Println("The end!")
 		err := c.Close()
-		if err != nil {
-			log.Fatal(err)
-		}
+		return err
 	}
 
 	message := c.inScanner.Text() + "\n"
 	_, err := c.connection.Write([]byte(message))
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	return err
 }
 
 func (c client) Receive() error {
-	c.outScanner.Scan()
-	_, err := c.out.Write(c.outScanner.Bytes())
-	c.out.Write([]byte("\n"))
-	if err != nil {
-		log.Fatal(err)
+	success := c.outScanner.Scan()
+	if success == false {
+		err := c.Close()
+		return err
 	}
-
+	
+	_, err := c.out.Write(c.outScanner.Bytes())
+	if err != nil {
+		return err
+	}
+	_, err = c.out.Write([]byte("\n"))
 	return err
 }
 

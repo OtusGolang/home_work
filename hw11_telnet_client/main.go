@@ -1,16 +1,71 @@
 package main
 
 import (
+	"context"
 	"flag"
-	"fmt"
 	"log"
 	"os"
 	"os/signal"
 	"strconv"
-	"sync"
-	"syscall"
 	"time"
 )
+
+func main() {
+	args := getArgs()
+	ctx, cancel := context.WithCancel(context.Background())
+
+	tc := NewTelnetClient(args.host + ":" + args.port, time.Duration(args.timeout) * time.Second, os.Stdin, os.Stdout)
+	err := tc.Connect()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	go func(tc TelnetClient, ctx context.Context, cancel context.CancelFunc) {
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			default:
+				err := tc.Receive()
+				if err != nil {
+					cancel()
+					return
+				}
+			}
+
+		}
+	}(tc, ctx, cancel)
+
+	go func(tc TelnetClient, ctx context.Context, cancel context.CancelFunc) {
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			default:
+				err := tc.Send()
+				if err != nil {
+					cancel()
+					return
+				}
+			}
+		}
+	}(tc, ctx, cancel)
+
+	go handleSignals(tc, cancel)
+
+	<-ctx.Done()
+}
+
+func handleSignals(tc TelnetClient, cancel context.CancelFunc) {
+	defer cancel()
+	sigCh := make(chan os.Signal)
+	signal.Notify(sigCh, os.Interrupt)
+	<-sigCh
+	err := tc.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
 
 type Args struct {
 	host string
@@ -44,39 +99,4 @@ func getArgs() *Args {
 	}
 
 	return &args
-}
-
-func main() {
-	args := getArgs()
-	var wg sync.WaitGroup
-	wg.Add(1)
-
-	tc := NewTelnetClient(args.host + ":" + args.port, time.Duration(args.timeout) * time.Second, os.Stdin, os.Stdout)
-	//tc := NewTelnetClient("localhost" + ":" + "4040", time.Duration(10) * time.Second, os.Stdin, os.Stdout)
-	tc.Connect()
-	//fmt.Printf("%+v\n", tc)
-
-	go func(tc TelnetClient) {
-		for {
-			tc.Receive()
-		}
-	}(tc)
-
-	go func(tc TelnetClient) {
-		for {
-			tc.Send()
-		}
-	}(tc)
-
-	go func(wg *sync.WaitGroup, tc TelnetClient) {
-		defer wg.Done()
-		//ticker := time.NewTicker(time.Second / 2)
-		c := make(chan os.Signal)
-		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-		<-c
-		fmt.Println("ABORT")
-		tc.Close()
-	}(&wg, tc)
-
-	wg.Wait()
 }
