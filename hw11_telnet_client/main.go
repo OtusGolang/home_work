@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"io"
 	"log"
 	"os"
 	"os/signal"
@@ -14,7 +15,7 @@ func main() {
 	args := getArgs()
 	ctx, cancel := context.WithCancel(context.Background())
 
-	tc := NewTelnetClient(args.host + ":" + args.port, time.Duration(args.timeout) * time.Second, os.Stdin, os.Stdout)
+	tc := NewTelnetClient(args.host+":"+args.port, time.Duration(args.timeout)*time.Second, os.Stdin, os.Stdout)
 	err := tc.Connect()
 	if err != nil {
 		log.Fatal(err)
@@ -32,7 +33,6 @@ func main() {
 					return
 				}
 			}
-
 		}
 	}(tc, ctx, cancel)
 
@@ -56,9 +56,9 @@ func main() {
 	<-ctx.Done()
 }
 
-func handleSignals(tc TelnetClient, cancel context.CancelFunc) {
+func handleSignals(tc io.Closer, cancel context.CancelFunc) {
 	defer cancel()
-	sigCh := make(chan os.Signal)
+	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, os.Interrupt)
 	<-sigCh
 	err := tc.Close()
@@ -68,8 +68,8 @@ func handleSignals(tc TelnetClient, cancel context.CancelFunc) {
 }
 
 type Args struct {
-	host string
-	port string
+	host    string
+	port    string
 	timeout int
 }
 

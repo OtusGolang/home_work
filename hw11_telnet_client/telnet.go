@@ -38,7 +38,7 @@ func (c client) Close() error {
 
 func (c client) Send() error {
 	success := c.inScanner.Scan()
-	if success == false {
+	if !success {
 		err := c.Close()
 		return err
 	}
@@ -50,11 +50,11 @@ func (c client) Send() error {
 
 func (c client) Receive() error {
 	success := c.outScanner.Scan()
-	if success == false {
+	if !success {
 		err := c.Close()
 		return err
 	}
-	
+
 	_, err := c.out.Write(c.outScanner.Bytes())
 	if err != nil {
 		return err
