@@ -39,9 +39,12 @@ func (c client) Close() error {
 
 func (c client) Send() error {
 	success := c.inScanner.Scan()
-	// TODO: put on one line
 	if success == false {
-		c.Close()
+		fmt.Println("The end!")
+		err := c.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	message := c.inScanner.Text() + "\n"
@@ -56,7 +59,6 @@ func (c client) Send() error {
 
 func (c client) Receive() error {
 	c.outScanner.Scan()
-	// TODO: put on one line
 	_, err := c.out.Write(c.outScanner.Bytes())
 	c.out.Write([]byte("\n"))
 	if err != nil {

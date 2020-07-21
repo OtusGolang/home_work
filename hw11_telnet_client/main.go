@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -51,13 +52,29 @@ func main() {
 	wg.Add(1)
 
 	tc := NewTelnetClient(args.host + ":" + args.port, time.Duration(args.timeout) * time.Second, os.Stdin, os.Stdout)
+	//tc := NewTelnetClient("localhost" + ":" + "4040", time.Duration(10) * time.Second, os.Stdin, os.Stdout)
 	tc.Connect()
 	//fmt.Printf("%+v\n", tc)
+
+	go func(tc TelnetClient) {
+		for {
+			tc.Receive()
+		}
+	}(tc)
+
+	go func(tc TelnetClient) {
+		for {
+			tc.Send()
+		}
+	}(tc)
+
 	go func(wg *sync.WaitGroup, tc TelnetClient) {
 		defer wg.Done()
+		//ticker := time.NewTicker(time.Second / 2)
 		c := make(chan os.Signal)
 		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 		<-c
+		fmt.Println("ABORT")
 		tc.Close()
 	}(&wg, tc)
 
