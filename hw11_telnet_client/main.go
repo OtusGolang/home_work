@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"os/signal"
 	"sync"
@@ -16,8 +17,9 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(1)
 
-	tc := NewTelnetClient("0.0.0.0:4242", 10 * time.Second, os.Stdin, os.Stdout)
-
+	tc := NewTelnetClient("0.0.0.0:4242", 10*time.Second, os.Stdin, os.Stdout)
+	tc.Connect()
+	fmt.Printf("%+v\n", tc)
 	go func(wg *sync.WaitGroup, tc TelnetClient) {
 		defer wg.Done()
 		c := make(chan os.Signal)
