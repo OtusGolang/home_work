@@ -1,0 +1,2 @@
+[psql]
+dsn = "user=yanis password=yanis dbname=events sslmode=disable"
