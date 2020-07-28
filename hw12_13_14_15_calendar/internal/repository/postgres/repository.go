@@ -26,5 +26,23 @@ func (r *Repo) Close() error {
 }
 
 func (r *Repo) GetEvents(ctx context.Context) ([]repository.Event, error) {
-	return []repository.Event{}, nil
+	rows, err := r.db.QueryContext(ctx, `
+		SELECT title FROM post
+	`)
+
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var events []repository.Event
+
+	for rows.Next() {
+		var e repository.Event
+		if err := rows.Scan(&e.Title); err != nil {
+			return nil, err
+		}
+		events = append(events, e)
+	}
+	return events, rows.Err()
 }

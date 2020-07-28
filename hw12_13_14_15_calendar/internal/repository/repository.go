@@ -9,5 +9,7 @@ type BaseRepo interface {
 }
 
 type Event struct {
-	id string
+	Id int
+	Title int
+	Body int
 }
