@@ -3,9 +3,9 @@ package repository
 import "context"
 
 type BaseRepo interface {
-	Connect(ctx context.Context) error
+	Connect(ctx context.Context, dsn string) error
 	Close() error
-	GetBooks(ctx context.Context) ([]Event, error)
+	GetEvents(ctx context.Context) ([]Event, error)
 }
 
 type Event struct {

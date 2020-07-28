@@ -1,2 +1,2 @@
 [psql]
-dsn = "user=yanis password=yanis dbname=events sslmode=disable"
+dsn = "host=localhost port=5432 user=yanis password=yanis dbname=events sslmode=disable"

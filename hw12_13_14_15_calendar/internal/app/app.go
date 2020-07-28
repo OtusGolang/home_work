@@ -2,15 +2,11 @@ package app
 
 import "calendar/internal/repository"
 
-type Repository interface {
-	GetEvents() error
-}
-
 type App struct {
 	r repository.BaseRepo
 }
 
-func New(r Repository) (*App, error) {
+func New(r repository.BaseRepo) (*App, error) {
 	return &App{r: r}, nil
 }
 
