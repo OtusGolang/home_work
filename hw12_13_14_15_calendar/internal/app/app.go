@@ -4,6 +4,7 @@ import (
 	"calendar/internal/repository"
 	"context"
 	"fmt"
+	"log"
 )
 
 type App struct {
@@ -15,7 +16,11 @@ func New(r repository.BaseRepo) (*App, error) {
 }
 
 func (a *App) Run(ctx context.Context) error {
-	events, _ := a.r.GetEvents(ctx)
+	events, err := a.r.GetEvents(ctx)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	for _, event := range events {
 		fmt.Println("%v", event)

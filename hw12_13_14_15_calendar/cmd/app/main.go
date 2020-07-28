@@ -27,6 +27,7 @@ func main() {
 		log.Fatal(err)
 	}
 
+	cancel()
 	if err := a.Run(ctx); err != nil {
 		log.Fatal(err)
 	}
