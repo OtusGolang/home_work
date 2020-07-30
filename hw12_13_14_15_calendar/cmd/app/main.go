@@ -5,15 +5,35 @@ import (
 	"calendar/internal/config"
 	"calendar/internal/repository/postgres"
 	"context"
+	"flag"
 	"fmt"
 	"log"
 )
 
+type Args struct {
+	configPath string
+}
+
+func getArgs() *Args {
+	configPath := flag.String("config", "", "path to config file")
+	flag.Parse()
+	//otherArgs := flag.Args()
+
+	args := Args{
+		configPath: *configPath,
+	}
+
+	return &args
+}
+
 func main() {
+	args := getArgs()
+
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	c, _ := config.Read("/home/yanis/work/home_work/hw12_13_14_15_calendar/configs/local.toml")
+	//c, _ := config.Read("/home/yanis/work/home_work/hw12_13_14_15_calendar/configs/local.toml")
+	c, _ := config.Read(args.configPath)
 	fmt.Println("%+v", c)
 
 	r := new(postgres.Repo)
@@ -32,4 +52,3 @@ func main() {
 		log.Fatal(err)
 	}
 }
-
