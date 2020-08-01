@@ -2,24 +2,12 @@ package memory
 
 import (
 	"calendar/internal/repository"
-	"context"
+	"fmt"
 	"time"
 )
 
 type MemoryDb struct {
 	events []repository.Event
-}
-
-func (m *MemoryDb) Connect(ctx context.Context, dsn string) error {
-	panic("implement me")
-}
-
-func (m *MemoryDb) Close() error {
-	panic("implement me")
-}
-
-func (m *MemoryDb) GetEvents(ctx context.Context) ([]repository.Event, error) {
-	panic("implement me")
 }
 
 func (m *MemoryDb) AddEvent(event repository.Event) error {
@@ -56,7 +44,11 @@ func filterDates(events []repository.Event, from time.Time, to time.Time) []repo
 	var dayEvents []repository.Event
 
 	for _, e := range events {
-		if e.StartAt.After(from) && e.StartAt.Before(to) {
+		fmt.Println("loop")
+		fmt.Println(e.StartAt.After(from))
+		fmt.Println(from)
+		//fmt.Println(e.StartAt.Before(to))
+		if (e.StartAt.After(from) || e.StartAt.Equal(from)) && e.StartAt.Before(to) {
 			dayEvents = append(dayEvents, e)
 		}
 	}
