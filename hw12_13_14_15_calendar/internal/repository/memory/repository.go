@@ -24,6 +24,7 @@ func (m *MemoryDb) GetEvents(ctx context.Context) ([]repository.Event, error) {
 
 func (m *MemoryDb) AddEvent(event repository.Event) error {
 	m.events = append(m.events, event)
+	return nil
 }
 
 func (m *MemoryDb) UpdateEvent(event repository.Event) error {
@@ -32,6 +33,7 @@ func (m *MemoryDb) UpdateEvent(event repository.Event) error {
 			m.events[i] = event
 		}
 	}
+	return nil
 }
 
 func (m *MemoryDb) DeleteEvent(id repository.Id) error {
