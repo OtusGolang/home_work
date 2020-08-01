@@ -3,7 +3,8 @@ package main
 import (
 	"calendar/internal/app"
 	"calendar/internal/config"
-	"calendar/internal/repository/postgres"
+	"calendar/internal/repository/memory"
+	"calendar/internal/server"
 	"context"
 	"flag"
 	"fmt"
@@ -36,13 +37,14 @@ func main() {
 	c, _ := config.Read(args.configPath)
 	fmt.Println("%+v", c)
 
-	r := new(postgres.Repo)
-	if err := r.Connect(ctx, c.PSQL.DSN); err != nil {
-		log.Fatal(err)
-	}
-	defer r.Close()
+	r := new(memory.MemoryDb)
+	s := new(server.ServerInstance)
+	//if err := r.Connect(ctx, c.PSQL.DSN); err != nil {
+	//	log.Fatal(err)
+	//}
+	//defer r.Close()
 
-	a, err := app.New(r)
+	a, err := app.New(r, s)
 	if err != nil {
 		log.Fatal(err)
 	}

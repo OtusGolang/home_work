@@ -2,28 +2,26 @@ package app
 
 import (
 	"calendar/internal/repository"
+	"calendar/internal/server"
 	"context"
-	"fmt"
 	"log"
 )
 
 type App struct {
 	r repository.BaseRepo
+	s server.Server
 }
 
-func New(r repository.BaseRepo) (*App, error) {
-	return &App{r: r}, nil
+func New(r repository.BaseRepo, s server.Server) (*App, error) {
+	return &App{r: r, s: s}, nil
 }
 
 func (a *App) Run(ctx context.Context) error {
-	events, err := a.r.GetEvents(ctx)
+	//events, err := a.r.GetEvents(ctx)
+	err := a.s.Start()
 
 	if err != nil {
 		log.Fatal(err)
-	}
-
-	for _, event := range events {
-		fmt.Println("%v", event)
 	}
 
 	return nil
