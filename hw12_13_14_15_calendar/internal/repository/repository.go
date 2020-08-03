@@ -7,10 +7,10 @@ import (
 type BaseRepo interface {
 	AddEvent(event Event) error
 	UpdateEvent(event Event) error
-	DeleteEvent(id Id) error
-	GetEventsDay(from time.Time) ([]Event, error)
-	GetEventsWeek(from time.Time) ([]Event, error)
-	GetEventsMonth(from time.Time) ([]Event, error)
+	DeleteEvent(userId Id, eventId Id) error
+	GetEventsDay(userId Id, from time.Time) ([]Event, error)
+	GetEventsWeek(userId Id, from time.Time) ([]Event, error)
+	GetEventsMonth(userId Id, from time.Time) ([]Event, error)
 }
 
 type Id = int
