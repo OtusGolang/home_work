@@ -3,6 +3,7 @@ package main
 import (
 	"calendar/internal/app"
 	"calendar/internal/config"
+	"calendar/internal/logger"
 	"calendar/internal/repository/memory"
 	"calendar/internal/server"
 	"context"
@@ -39,12 +40,13 @@ func main() {
 
 	r := new(memory.MemoryDb)
 	s := new(server.ServerInstance)
+	l := new(logger.LoggerInstance)
 	//if err := r.Connect(ctx, c.PSQL.DSN); err != nil {
 	//	log.Fatal(err)
 	//}
 	//defer r.Close()
 
-	a, err := app.New(r, s)
+	a, err := app.New(r, s, l)
 	if err != nil {
 		log.Fatal(err)
 	}
