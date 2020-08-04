@@ -1,10 +1,15 @@
 package main
 
 import (
+	"calendar/internal/app"
+	"calendar/internal/config"
+	"calendar/internal/logger"
+	"calendar/internal/repository/postgres"
+	"calendar/internal/server"
+	"context"
 	"flag"
 	"fmt"
 	_ "github.com/jackc/pgx/v4/stdlib"
-	"github.com/jmoiron/sqlx"
 	"log"
 	"time"
 )
@@ -36,47 +41,47 @@ type Event struct {
 }
 
 func main() {
-	//args := getArgs()
-	//
-	//ctx, cancel := context.WithCancel(context.Background())
-	//defer cancel()
-	//
-	////c, _ := config.Read("/home/yanis/work/home_work/hw12_13_14_15_calendar/configs/local.toml")
-	//c, _ := config.Read(args.configPath)
-	//fmt.Println("%+v", c)
-	//
-	//r := new(memory.MemoryDb)
-	//s := new(server.ServerInstance)
-	//l := new(logger.LoggerInstance)
-	////if err := r.Connect(ctx, c.PSQL.DSN); err != nil {
-	////	log.Fatal(err)
-	////}
-	////defer r.Close()
-	//
-	//a, err := app.New(r, s, l)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//cancel()
-	//if err := a.Run(ctx); err != nil {
-	//	log.Fatal(err)
-	//}
+	args := getArgs()
 
-	db, err := sqlx.Connect("pgx", "user=yanis password=yanis dbname=events sslmode=disable")
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	//c, _ := config.Read("/home/yanis/work/home_work/hw12_13_14_15_calendar/configs/local.toml")
+	c, _ := config.Read(args.configPath)
+	fmt.Println("%+v", c)
+
+	r := new(postgres.Repo)
+	s := new(server.ServerInstance)
+	l := new(logger.LoggerInstance)
+	//if err := r.Connect(ctx, c.PSQL.DSN); err != nil {
+	//	log.Fatal(err)
+	//}
+	//defer r.Close()
+
+	fmt.Println("Hello0")
+
+	a, err := app.New(r, s, l)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
 	}
 
-	// exec the schema or fail; multi-statement Exec behavior varies between
-	// database drivers;  pq will exec them all, sqlite3 won't, ymmv
+	fmt.Println("Hello1")
 
-	// Query the database, storing results in a []Person (wrapped in []interface{})
-	events := []Event{}
-	db.Select(&events, "SELECT * FROM events")
-	//jason, john := events[0], events[1]
+	//cancel()
+	if err := a.Run(ctx); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Hello2")
+
+	events, err := r.GetEventsDay(1, time.Now().Add(time.Hour * time.Duration(-5)))
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	for _, event := range events {
+		fmt.Println("Hello")
 		fmt.Println("%v", event)
 	}
 }

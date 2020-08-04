@@ -1,10 +1,13 @@
 package repository
 
 import (
+	"context"
 	"time"
 )
 
 type BaseRepo interface {
+	Connect(ctx context.Context, dsn string) error
+	Close() error
 	AddEvent(event Event) error
 	UpdateEvent(event Event) error
 	DeleteEvent(userId Id, eventId Id) error
@@ -16,13 +19,14 @@ type BaseRepo interface {
 type Id = int
 
 type Event struct {
-	Id
+	// TODO: try to put ID
+	Id          int
 	Title       string
-	StartAt     time.Time
-	EndAt       time.Time
+	StartAt     time.Time `db:"start_at"`
+	EndAt       time.Time `db:"end_at"`
 	Description string
-	UserId      Id
-	NotifyAt    time.Time
+	UserId      int       `db:"user_id"`
+	NotifyAt    time.Time `db:"notify_at"`
 }
 
 type User struct {

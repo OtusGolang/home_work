@@ -2,12 +2,21 @@ package memory
 
 import (
 	"calendar/internal/repository"
+	"context"
 	"errors"
 	"time"
 )
 
 type MemoryDb struct {
 	events []repository.Event
+}
+
+func (m *MemoryDb) Connect(ctx context.Context, dsn string) error {
+	return nil
+}
+
+func (m *MemoryDb) Close() error {
+	return nil
 }
 
 func (m *MemoryDb) AddEvent(event repository.Event) error {
@@ -71,5 +80,3 @@ func (m *MemoryDb) GetEventsWeek(userId repository.Id, from time.Time) ([]reposi
 func (m *MemoryDb) GetEventsMonth(userId repository.Id, from time.Time) ([]repository.Event, error) {
 	return filterDates(userId, m.events, from, from.AddDate(0, 1, 0)), nil
 }
-
-var _ repository.BaseRepo = (*MemoryDb)(nil)
