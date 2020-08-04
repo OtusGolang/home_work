@@ -81,7 +81,6 @@ func main() {
 	}
 
 	for _, event := range events {
-		fmt.Println("Hello")
 		fmt.Println("%v", event)
 	}
 }

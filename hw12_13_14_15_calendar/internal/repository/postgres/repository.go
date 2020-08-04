@@ -21,7 +21,7 @@ func (r *Repo) Connect(ctx context.Context, dsn string) (err error) {
 	//// TODO: WTF?
 	//return r.db.PingContext(ctx)
 	fmt.Println("inside connect")
-	r.db, err = sqlx.Connect("pgx", "user=yanis password=yanis dbname=events sslmode=disable")
+	r.db, err = sqlx.Connect("pgx", "host=localhost port=5432 user=yanis password=yanis dbname=events sslmode=disable")
 	return
 }
 
