@@ -23,6 +23,9 @@ values ('Event 1', current_timestamp, current_timestamp, 'Description 1', 1, cur
        ('Event 3', current_timestamp, current_timestamp, 'Description 3', 2, current_timestamp),
        ('Event 4', current_timestamp, current_timestamp, 'Description 4', 2, current_timestamp);
 
+insert into events (title, start_at, end_at, description, user_id, notify_at)
+values ('Event 5', current_timestamp, current_timestamp, 'Description 5', 1, current_timestamp + interval '250 hours');
+
 -- +goose Down
 DROP TABLE events;
 DROP TABLE users;
