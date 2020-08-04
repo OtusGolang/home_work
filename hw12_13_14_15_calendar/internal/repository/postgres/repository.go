@@ -46,7 +46,7 @@ func (r *Repo) GetEventsDay(userId repository.Id, from time.Time) ([]repository.
 	var events []repository.Event
 	x := make(map[string]interface{})
 	x["start"] = from
-	x["end"] = from.AddDate(0, 0, 1)
+	x["end"] = from.Add(time.Hour * time.Duration(24))
 
 	//rows, err := r.db.NamedQuery("SELECT * FROM events WHERE title=:title", x)
 
