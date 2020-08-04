@@ -13,4 +13,5 @@ linters:
     - gomnd
     - lll
     - nakedret
+    - nlreturn
     - wsl
