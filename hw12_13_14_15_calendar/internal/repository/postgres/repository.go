@@ -44,7 +44,14 @@ func (m *Repo) DeleteEvent(userId repository.Id, eventId repository.Id) error {
 
 func (r *Repo) GetEventsDay(userId repository.Id, from time.Time) ([]repository.Event, error) {
 	var events []repository.Event
-	err := r.db.Select(&events, "SELECT * FROM events")
+	x := make(map[string]interface{})
+	//x["start"] = from
+	//x["end"] = from.AddDate(0, 0, 1)
+	x["title"] = "Event 1"
+	//rows, err := r.db.NamedQuery("SELECT * FROM events WHERE title=:title", x)
+
+	nstmt, err := r.db.PrepareNamed("SELECT * FROM events WHERE title=:title")
+	err = nstmt.Select(&events, x)
 
 	return events, err
 }
