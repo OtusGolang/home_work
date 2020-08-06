@@ -4,7 +4,6 @@ import (
 	"calendar/internal/app"
 	"calendar/internal/config"
 	"calendar/internal/logger"
-	"calendar/internal/repository"
 	"calendar/internal/repository/postgres"
 	"calendar/internal/server"
 	"context"
@@ -12,7 +11,6 @@ import (
 	"fmt"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"log"
-	"time"
 )
 
 type Args struct {
@@ -29,16 +27,6 @@ func getArgs() *Args {
 	}
 
 	return &args
-}
-
-type Event struct {
-	Id          int
-	Title       string
-	StartAt     time.Time `db:"start_at"`
-	EndAt       time.Time `db:"end_at"`
-	Description string
-	UserId      int       `db:"user_id"`
-	NotifyAt    time.Time `db:"notify_at"`
 }
 
 func main() {
@@ -78,17 +66,17 @@ func main() {
 	//events, err := r.GetEventsDay(2, time.Now().Add(time.Hour * time.Duration(-5)))
 
 	//err = r.DeleteEvent(1, 1)
-	err = r.AddEvent(repository.Event{
-		Title:       "Event 6",
-		StartAt:     time.Now(),
-		EndAt:       time.Now(),
-		Description: "Description 6",
-		UserId:      1,
-		NotifyAt:    time.Now(),
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
+	//err = r.AddEvent(repository.Event{
+	//	Title:       "Event 6",
+	//	StartAt:     time.Now(),
+	//	EndAt:       time.Now(),
+	//	Description: "Description 6",
+	//	UserId:      1,
+	//	NotifyAt:    time.Now(),
+	//})
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
 
 	//for _, event := range events {
 	//	fmt.Println("%v", event)

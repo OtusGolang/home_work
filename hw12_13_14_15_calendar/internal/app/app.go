@@ -20,25 +20,25 @@ func New(r repository.BaseRepo, s server.Server, l logger.Logger) (*App, error) 
 
 func (a *App) Run(ctx context.Context) error {
 	//events, err := a.r.GetEvents(ctx)
-	//path := "./logs/logs.txt"
+	path := "./logs/logs.txt"
 
-	//err := a.l.Init(path)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//err = a.s.Start()
-	//
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-
-	// FIXME
-	// TODO: don't forget to close connection
-	err := a.r.Connect(ctx, "123")
+	err := a.l.Init(path)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	err = a.s.Start()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// FIXME
+	// TODO: don't forget to close connection
+	//err := a.r.Connect(ctx, "123")
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
 
 	return nil
 }

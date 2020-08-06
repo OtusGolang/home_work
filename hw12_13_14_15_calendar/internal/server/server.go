@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
 
 type Server interface {
@@ -24,14 +25,25 @@ func GetIP(r *http.Request) string {
 	return r.RemoteAddr
 }
 
+type BasicHandler func(http.ResponseWriter, *http.Request)
+
+func logMiddleware(h BasicHandler) BasicHandler {
+	return func(w http.ResponseWriter, r *http.Request) {
+		defer func(t time.Time) {
+			log.Println(GetIP(r)+" "+r.Method+" "+r.Host+" "+r.UserAgent(), " ", time.Since(t).Milliseconds(), "ms")
+		}(time.Now())
+
+		h(w, r)
+	}
+}
+
 func hello(w http.ResponseWriter, req *http.Request) {
-	log.Println(GetIP(req) + " " + req.Method + " " + req.Host + " " + req.UserAgent())
 	fmt.Fprintf(w, "hello world\n")
 }
 
 func (s *ServerInstance) Start() error {
 	s.instance = &http.Server{Addr: ":8080"}
-	http.HandleFunc("/hello", hello)
+	http.HandleFunc("/hello", logMiddleware(hello))
 
 	return s.instance.ListenAndServe()
 }
