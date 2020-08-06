@@ -4,6 +4,7 @@ import (
 	"calendar/internal/app"
 	"calendar/internal/config"
 	"calendar/internal/logger"
+	"calendar/internal/repository"
 	"calendar/internal/repository/postgres"
 	"calendar/internal/server"
 	"context"
@@ -74,13 +75,22 @@ func main() {
 
 	fmt.Println("Hello2")
 
-	events, err := r.GetEventsDay(1, time.Now().Add(time.Hour * time.Duration(-5)))
+	//events, err := r.GetEventsDay(2, time.Now().Add(time.Hour * time.Duration(-5)))
 
+	//err = r.DeleteEvent(1, 1)
+	err = r.AddEvent(repository.Event{
+		Title:       "Event 6",
+		StartAt:     time.Now(),
+		EndAt:       time.Now(),
+		Description: "Description 6",
+		UserId:      1,
+		NotifyAt:    time.Now(),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	for _, event := range events {
-		fmt.Println("%v", event)
-	}
+	//for _, event := range events {
+	//	fmt.Println("%v", event)
+	//}
 }
