@@ -3,7 +3,6 @@ package postgres
 import (
 	"calendar/internal/repository"
 	"context"
-	"fmt"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/jmoiron/sqlx"
 	"time"
@@ -14,14 +13,7 @@ type Repo struct {
 }
 
 func (r *Repo) Connect(ctx context.Context, dsn string) (err error) {
-	//r.db, err = sql.Open("pgx", dsn)
-	//if err != nil {
-	//	return
-	//}
-	//// TODO: WTF?
-	//return r.db.PingContext(ctx)
-	fmt.Println("inside connect")
-	r.db, err = sqlx.Connect("pgx", "host=localhost port=5432 user=yanis password=yanis dbname=events sslmode=disable")
+	r.db, err = sqlx.Connect("pgx", dsn)
 	return
 }
 

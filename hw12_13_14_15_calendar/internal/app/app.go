@@ -35,10 +35,10 @@ func (a *App) Run(ctx context.Context) error {
 
 	// FIXME
 	// TODO: don't forget to close connection
-	//err := a.r.Connect(ctx, "123")
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
+	err = a.r.Connect(ctx, "host=localhost port=5432 user=yanis password=yanis dbname=events sslmode=disable")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	return nil
 }
