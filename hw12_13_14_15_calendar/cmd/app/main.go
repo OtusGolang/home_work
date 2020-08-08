@@ -57,7 +57,7 @@ func main() {
 	fmt.Println("Hello1")
 
 	//cancel()
-	if err := a.Run(ctx); err != nil {
+	if err := a.Run(ctx, "./logs/logs.txt", "host=localhost port=5432 user=yanis password=yanis dbname=events sslmode=disable"); err != nil {
 		log.Fatal(err)
 	}
 

@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"log"
 	"os"
 )
@@ -22,5 +23,6 @@ func (i *LoggerInstance) Init(path string) error {
 	}
 
 	log.SetOutput(file)
+	fmt.Println("logger initialized, log file: ", path)
 	return nil
 }

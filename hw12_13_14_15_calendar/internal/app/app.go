@@ -9,33 +9,31 @@ import (
 )
 
 type App struct {
-	r repository.BaseRepo
-	s server.Server
-	l logger.Logger
+	repo repository.BaseRepo
+	server server.Server
+	logger logger.Logger
 }
 
 func New(r repository.BaseRepo, s server.Server, l logger.Logger) (*App, error) {
-	return &App{r: r, s: s, l: l}, nil
+	return &App{repo: r, server: s, logger: l}, nil
 }
 
-func (a *App) Run(ctx context.Context) error {
-	//events, err := a.r.GetEvents(ctx)
-	path := "./logs/logs.txt"
-
-	err := a.l.Init(path)
+func (a *App) Run(ctx context.Context, logPath string, dsn string) error {
+	// logger
+	err := a.logger.Init(logPath)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = a.s.Start()
-
+	// server
+	err = a.server.Start()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// FIXME
 	// TODO: don't forget to close connection
-	err = a.r.Connect(ctx, "host=localhost port=5432 user=yanis password=yanis dbname=events sslmode=disable")
+	// storage
+	err = a.repo.Connect(ctx, dsn)
 	if err != nil {
 		log.Fatal(err)
 	}

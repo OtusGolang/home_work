@@ -36,8 +36,12 @@ func helloHandler(w http.ResponseWriter, req *http.Request) {
 func (s *ServerInstance) Start() error {
 	s.instance = &http.Server{Addr: ":8080"}
 	http.HandleFunc("/hello", logMiddleware(helloHandler))
-	fmt.Println("starting server at port :8080")
-	return s.instance.ListenAndServe()
+	err := s.instance.ListenAndServe()
+	if err != nil {
+		return err
+	}
+	fmt.Println("server started at port :8080")
+	return nil
 }
 
 func (s *ServerInstance) Stop() error {
