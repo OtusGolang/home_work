@@ -14,7 +14,7 @@ type Server interface {
 }
 
 type ServerInstance struct {
-	instance *http.Server
+	instance *http.ServeMux
 }
 
 func GetIP(r *http.Request) string {
@@ -27,25 +27,29 @@ func GetIP(r *http.Request) string {
 
 type BasicHandler func(http.ResponseWriter, *http.Request)
 
-func logMiddleware(h BasicHandler) BasicHandler {
-	return func(w http.ResponseWriter, r *http.Request) {
+func logMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func(t time.Time) {
 			log.Println(GetIP(r)+" "+r.Method+" "+r.Host+" "+r.UserAgent(), " ", time.Since(t).Milliseconds(), "ms")
 		}(time.Now())
 
-		h(w, r)
-	}
+		next.ServeHTTP(w, r)
+	})
 }
 
-func hello(w http.ResponseWriter, req *http.Request) {
+func helloHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "hello world\n")
 }
 
 func (s *ServerInstance) Start() error {
-	s.instance = &http.Server{Addr: ":8080"}
-	http.HandleFunc("/hello", logMiddleware(hello))
+	siteMux := http.NewServeMux()
+	siteMux.HandleFunc("/hello", helloHandler)
 
-	return s.instance.ListenAndServe()
+	siteHandler := logMiddleware(siteMux)
+
+	fmt.Println("starting server at :8080")
+
+	return http.ListenAndServe(":8080", siteHandler)
 }
 
 func (s *ServerInstance) Stop() error {
