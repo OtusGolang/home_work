@@ -47,15 +47,21 @@ func main() {
 	//}
 	//defer r.Close()
 
+	fmt.Println("Hello0")
+
 	a, err := app.New(r, s, l)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	fmt.Println("Hello1")
+
 	//cancel()
 	if err := a.Run(ctx); err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println("Hello2")
 
 	//events, err := r.GetEventsDay(2, time.Now().Add(time.Hour * time.Duration(-5)))
 
