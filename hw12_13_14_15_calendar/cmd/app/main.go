@@ -28,13 +28,13 @@ func getArgs() *Args {
 }
 
 func main() {
-	//args := getArgs()
+	args := getArgs()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	c, _ := config.Read("/home/yanis/work/home_work/hw12_13_14_15_calendar/configs/local.toml")
-	//c, _ := config.Read(args.configPath)
+	// ./configs/local.toml
+	c, _ := config.Read(args.configPath)
 
 	r := new(postgres.Repo)
 	s := new(server.ServerInstance)
