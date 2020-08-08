@@ -9,8 +9,13 @@ func Read(fpath string) (c Config, err error) {
 
 type Config struct {
 	PSQL PSQLConfig
+	Logger LoggerConfig
 }
 
 type PSQLConfig struct {
 	DSN string
+}
+
+type LoggerConfig struct {
+	Path string
 }

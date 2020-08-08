@@ -1,2 +1,5 @@
 [psql]
 dsn = "host=localhost port=5432 user=yanis password=yanis dbname=events sslmode=disable"
+
+[logger]
+path = "./logs/logs.txt"
