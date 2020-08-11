@@ -9,7 +9,7 @@ import (
 )
 
 type App struct {
-	repo repository.BaseRepo
+	repo   repository.BaseRepo
 	server server.Server
 	logger logger.Logger
 }
