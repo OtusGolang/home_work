@@ -8,8 +8,9 @@ import (
 	"calendar/internal/server"
 	"context"
 	"flag"
-	_ "github.com/jackc/pgx/v4/stdlib"
 	"log"
+
+	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
 type Args struct {
