@@ -8,7 +8,7 @@ func Read(fpath string) (c Config, err error) {
 }
 
 type Config struct {
-	PSQL PSQLConfig
+	PSQL   PSQLConfig
 	Logger LoggerConfig
 }
 
