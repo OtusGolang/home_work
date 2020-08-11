@@ -1,5 +1,5 @@
 build:
-	go build ./... -o calendar
+	go build -o calendar cmd/app/*
 
 test:
 	go test -race ./...
