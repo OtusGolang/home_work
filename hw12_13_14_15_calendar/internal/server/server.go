@@ -13,7 +13,7 @@ type Server interface {
 	Stop() error
 }
 
-type ServerInstance struct {
+type Instance struct {
 	instance *http.Server
 }
 
@@ -33,13 +33,13 @@ func helloHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "hello world\n")
 }
 
-func (s *ServerInstance) Start() error {
+func (s *Instance) Start() error {
 	s.instance = &http.Server{Addr: ":8080"}
 	http.HandleFunc("/hello", logMiddleware(helloHandler))
 	fmt.Println("server starting at port :8080")
 	return s.instance.ListenAndServe()
 }
 
-func (s *ServerInstance) Stop() error {
+func (s *Instance) Stop() error {
 	return s.instance.Shutdown(context.Background())
 }

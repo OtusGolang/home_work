@@ -38,7 +38,7 @@ func main() {
 	c, _ := config.Read(args.configPath)
 
 	r := new(postgres.Repo)
-	s := new(server.ServerInstance)
+	s := new(server.Instance)
 	l := new(logger.LoggerInstance)
 
 	a, err := app.New(r, s, l)
