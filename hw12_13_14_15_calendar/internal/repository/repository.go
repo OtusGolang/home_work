@@ -19,7 +19,7 @@ type BaseRepo interface {
 type ID = int
 
 type Event struct {
-	Id          ID
+	ID          ID
 	Title       string
 	StartAt     time.Time `db:"start_at"`
 	EndAt       time.Time `db:"end_at"`

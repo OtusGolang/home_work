@@ -7,26 +7,27 @@ import (
 	"time"
 )
 
-type MemoryDb struct {
+type DB struct {
 	events []repository.Event
 }
 
-func (m *MemoryDb) Connect(ctx context.Context, dsn string) error {
+func (m *DB) Connect(ctx context.Context, dsn string) error {
 	return nil
 }
 
-func (m *MemoryDb) Close() error {
+func (m *DB) Close() error {
 	return nil
 }
 
-func (m *MemoryDb) AddEvent(event repository.Event) error {
+func (m *DB) AddEvent(event repository.Event) error {
 	m.events = append(m.events, event)
+
 	return nil
 }
 
-func (m *MemoryDb) UpdateEvent(event repository.Event) error {
+func (m *DB) UpdateEvent(event repository.Event) error {
 	for i, e := range m.events {
-		if e.Id == event.Id {
+		if e.ID == event.ID {
 			if e.UserID != event.UserID {
 				return errors.New("unauthorized request")
 			}
@@ -34,14 +35,15 @@ func (m *MemoryDb) UpdateEvent(event repository.Event) error {
 			m.events[i] = event
 		}
 	}
+
 	return nil
 }
 
-func (m *MemoryDb) DeleteEvent(userID repository.ID, eventID repository.ID) error {
+func (m *DB) DeleteEvent(userID repository.ID, eventID repository.ID) error {
 	var newEvents []repository.Event
 
 	for _, e := range m.events {
-		if e.Id == eventID {
+		if e.ID == eventID {
 			if e.UserID != userID {
 				return errors.New("unauthorized request")
 			}
@@ -69,14 +71,14 @@ func filterDates(userID repository.ID, events []repository.Event, from time.Time
 	return dayEvents
 }
 
-func (m *MemoryDb) GetEventsDay(userID repository.ID, from time.Time) ([]repository.Event, error) {
+func (m *DB) GetEventsDay(userID repository.ID, from time.Time) ([]repository.Event, error) {
 	return filterDates(userID, m.events, from, from.AddDate(0, 0, 1)), nil
 }
 
-func (m *MemoryDb) GetEventsWeek(userID repository.ID, from time.Time) ([]repository.Event, error) {
+func (m *DB) GetEventsWeek(userID repository.ID, from time.Time) ([]repository.Event, error) {
 	return filterDates(userID, m.events, from, from.AddDate(0, 0, 7)), nil
 }
 
-func (m *MemoryDb) GetEventsMonth(userID repository.ID, from time.Time) ([]repository.Event, error) {
+func (m *DB) GetEventsMonth(userID repository.ID, from time.Time) ([]repository.Event, error) {
 	return filterDates(userID, m.events, from, from.AddDate(0, 1, 0)), nil
 }

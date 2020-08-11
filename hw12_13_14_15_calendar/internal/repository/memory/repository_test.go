@@ -12,7 +12,7 @@ var wrongUserID = 2
 
 func TestImMemoryImplementation(t *testing.T) {
 	t.Run("test add", func(t *testing.T) {
-		db := new(MemoryDb)
+		db := new(DB)
 		startTime := time.Now()
 
 		dbEvents, _ := db.GetEventsDay(userID, startTime)
@@ -24,7 +24,7 @@ func TestImMemoryImplementation(t *testing.T) {
 	})
 
 	t.Run("test update", func(t *testing.T) {
-		db := new(MemoryDb)
+		db := new(DB)
 		startTime := time.Now()
 		initialEvent := createEvent(startTime)
 
@@ -36,12 +36,12 @@ func TestImMemoryImplementation(t *testing.T) {
 		dbEvents, _ := db.GetEventsDay(userID, startTime)
 
 		assert.NoError(t, err)
-		assert.Equal(t, initialEvent.Id, dbEvents[0].Id)
+		assert.Equal(t, initialEvent.ID, dbEvents[0].ID)
 		assert.Equal(t, updatedEvent.Title, dbEvents[0].Title)
 	})
 
 	t.Run("test update, auth error", func(t *testing.T) {
-		db := new(MemoryDb)
+		db := new(DB)
 		startTime := time.Now()
 		initialEvent := createEvent(startTime)
 
@@ -55,12 +55,12 @@ func TestImMemoryImplementation(t *testing.T) {
 	})
 
 	t.Run("test delete", func(t *testing.T) {
-		db := new(MemoryDb)
+		db := new(DB)
 		initialEvent := createEvent(time.Now())
 
 		_ = db.AddEvent(initialEvent)
 
-		err := db.DeleteEvent(userID, initialEvent.Id)
+		err := db.DeleteEvent(userID, initialEvent.ID)
 
 		dbEvents, _ := db.GetEventsDay(userID, time.Now())
 
@@ -69,18 +69,18 @@ func TestImMemoryImplementation(t *testing.T) {
 	})
 
 	t.Run("test delete, auth error", func(t *testing.T) {
-		db := new(MemoryDb)
+		db := new(DB)
 		initialEvent := createEvent(time.Now())
 
 		_ = db.AddEvent(initialEvent)
 
-		err := db.DeleteEvent(wrongUserID, initialEvent.Id)
+		err := db.DeleteEvent(wrongUserID, initialEvent.ID)
 
 		assert.Error(t, err)
 	})
 
 	t.Run("test get events, day", func(t *testing.T) {
-		db := new(MemoryDb)
+		db := new(DB)
 
 		threshold := time.Now()
 		for _, d := range []time.Duration{-3, -2, -1, 0, 1, 2, 3, 25, 26, 27} {
@@ -93,7 +93,7 @@ func TestImMemoryImplementation(t *testing.T) {
 	})
 
 	t.Run("test get events, week", func(t *testing.T) {
-		db := new(MemoryDb)
+		db := new(DB)
 
 		threshold := time.Now()
 		for _, d := range []time.Duration{-3, -2, -1, 0, 1, 2, 3, 25, 26, 27} {
@@ -106,7 +106,7 @@ func TestImMemoryImplementation(t *testing.T) {
 	})
 
 	t.Run("test get events, month", func(t *testing.T) {
-		db := new(MemoryDb)
+		db := new(DB)
 
 		threshold := time.Now()
 		for _, d := range []time.Duration{-3, -2, -1, 0, 1, 2, 3, 25, 26, 27} {
@@ -122,7 +122,7 @@ func TestImMemoryImplementation(t *testing.T) {
 
 func createEvent(initialTime time.Time) repository.Event {
 	return repository.Event{
-		Id:          0,
+		ID:          0,
 		Title:       "title",
 		StartAt:     initialTime,
 		EndAt:       initialTime.Add(time.Hour * 24),

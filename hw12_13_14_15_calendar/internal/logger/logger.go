@@ -24,5 +24,6 @@ func (i *Instance) Init(path string) error {
 
 	log.SetOutput(file)
 	fmt.Println("logger initialized, log file: ", path)
+
 	return nil
 }

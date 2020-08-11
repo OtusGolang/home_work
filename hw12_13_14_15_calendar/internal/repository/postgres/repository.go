@@ -14,6 +14,7 @@ type Repo struct {
 
 func (r *Repo) Connect(ctx context.Context, dsn string) (err error) {
 	r.db, err = sqlx.Connect("pgx", dsn)
+
 	return
 }
 
