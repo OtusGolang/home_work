@@ -51,11 +51,11 @@ func (r *Repo) UpdateEvent(event repository.Event) (err error) {
 	return
 }
 
-func (r *Repo) DeleteEvent(userId repository.ID, eventId repository.ID) (err error) {
+func (r *Repo) DeleteEvent(userID repository.ID, eventId repository.ID) (err error) {
 	var events []repository.Event
 	option := make(map[string]interface{})
 	option["event_id"] = eventId
-	option["user_id"] = userId
+	option["user_id"] = userID
 
 	nstmt, err := r.db.PrepareNamed("DELETE FROM events WHERE  user_id = :user_id and id=:event_id")
 
@@ -68,12 +68,12 @@ func (r *Repo) DeleteEvent(userId repository.ID, eventId repository.ID) (err err
 	return
 }
 
-func (r *Repo) getEvents(userId repository.ID, from time.Time, to time.Time) ([]repository.Event, error) {
+func (r *Repo) getEvents(userID repository.ID, from time.Time, to time.Time) ([]repository.Event, error) {
 	var events []repository.Event
 	option := make(map[string]interface{})
 	option["start"] = from
 	option["end"] = to
-	option["user_id"] = userId
+	option["user_id"] = userID
 
 	nstmt, err := r.db.PrepareNamed("SELECT * FROM events WHERE  user_id = :user_id and start_at>=:start and start_at<:end")
 
@@ -86,14 +86,14 @@ func (r *Repo) getEvents(userId repository.ID, from time.Time, to time.Time) ([]
 	return events, err
 }
 
-func (r *Repo) GetEventsDay(userId repository.ID, from time.Time) ([]repository.Event, error) {
-	return r.getEvents(userId, from, from.Add(time.Hour*24))
+func (r *Repo) GetEventsDay(userID repository.ID, from time.Time) ([]repository.Event, error) {
+	return r.getEvents(userID, from, from.Add(time.Hour*24))
 }
 
-func (r *Repo) GetEventsWeek(userId repository.ID, from time.Time) ([]repository.Event, error) {
-	return r.getEvents(userId, from, from.AddDate(0, 0, 7))
+func (r *Repo) GetEventsWeek(userID repository.ID, from time.Time) ([]repository.Event, error) {
+	return r.getEvents(userID, from, from.AddDate(0, 0, 7))
 }
 
-func (r *Repo) GetEventsMonth(userId repository.ID, from time.Time) ([]repository.Event, error) {
-	return r.getEvents(userId, from, from.AddDate(0, 1, 0))
+func (r *Repo) GetEventsMonth(userID repository.ID, from time.Time) ([]repository.Event, error) {
+	return r.getEvents(userID, from, from.AddDate(0, 1, 0))
 }

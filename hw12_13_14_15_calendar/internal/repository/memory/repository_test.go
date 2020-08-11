@@ -7,19 +7,19 @@ import (
 	"time"
 )
 
-var userId = 1
-var wrongUserId = 2
+var userID = 1
+var wrongUserID = 2
 
 func TestImMemoryImplementation(t *testing.T) {
 	t.Run("test add", func(t *testing.T) {
 		db := new(MemoryDb)
 		startTime := time.Now()
 
-		dbEvents, _ := db.GetEventsDay(userId, startTime)
+		dbEvents, _ := db.GetEventsDay(userID, startTime)
 		assert.Equal(t, 0, len(dbEvents))
 
 		_ = db.AddEvent(createEvent(startTime))
-		dbEvents, _ = db.GetEventsDay(userId, startTime)
+		dbEvents, _ = db.GetEventsDay(userID, startTime)
 		assert.Equal(t, 1, len(dbEvents))
 	})
 
@@ -33,7 +33,7 @@ func TestImMemoryImplementation(t *testing.T) {
 		updatedEvent.Title = "updated"
 		err := db.UpdateEvent(updatedEvent)
 
-		dbEvents, _ := db.GetEventsDay(userId, startTime)
+		dbEvents, _ := db.GetEventsDay(userID, startTime)
 
 		assert.NoError(t, err)
 		assert.Equal(t, initialEvent.Id, dbEvents[0].Id)
@@ -47,7 +47,7 @@ func TestImMemoryImplementation(t *testing.T) {
 
 		_ = db.AddEvent(initialEvent)
 		updatedEvent := initialEvent
-		updatedEvent.UserId = wrongUserId
+		updatedEvent.UserID = wrongUserID
 		updatedEvent.Title = "updated"
 		err := db.UpdateEvent(updatedEvent)
 
@@ -60,9 +60,9 @@ func TestImMemoryImplementation(t *testing.T) {
 
 		_ = db.AddEvent(initialEvent)
 
-		err := db.DeleteEvent(userId, initialEvent.Id)
+		err := db.DeleteEvent(userID, initialEvent.Id)
 
-		dbEvents, _ := db.GetEventsDay(userId, time.Now())
+		dbEvents, _ := db.GetEventsDay(userID, time.Now())
 
 		assert.NoError(t, err)
 		assert.Equal(t, 0, len(dbEvents))
@@ -74,7 +74,7 @@ func TestImMemoryImplementation(t *testing.T) {
 
 		_ = db.AddEvent(initialEvent)
 
-		err := db.DeleteEvent(wrongUserId, initialEvent.Id)
+		err := db.DeleteEvent(wrongUserID, initialEvent.Id)
 
 		assert.Error(t, err)
 	})
@@ -88,7 +88,7 @@ func TestImMemoryImplementation(t *testing.T) {
 			_ = db.AddEvent(event)
 		}
 
-		dbEvents, _ := db.GetEventsDay(userId, threshold)
+		dbEvents, _ := db.GetEventsDay(userID, threshold)
 		assert.Equal(t, 4, len(dbEvents))
 	})
 
@@ -101,7 +101,7 @@ func TestImMemoryImplementation(t *testing.T) {
 			_ = db.AddEvent(event)
 		}
 
-		dbEvents, _ := db.GetEventsWeek(userId, threshold)
+		dbEvents, _ := db.GetEventsWeek(userID, threshold)
 		assert.Equal(t, 4, len(dbEvents))
 	})
 
@@ -115,7 +115,7 @@ func TestImMemoryImplementation(t *testing.T) {
 			_ = db.AddEvent(event)
 		}
 
-		dbEvents, _ := db.GetEventsMonth(userId, threshold)
+		dbEvents, _ := db.GetEventsMonth(userID, threshold)
 		assert.Equal(t, 4, len(dbEvents))
 	})
 }
@@ -127,7 +127,7 @@ func createEvent(initialTime time.Time) repository.Event {
 		StartAt:     initialTime,
 		EndAt:       initialTime.Add(time.Hour * 24),
 		Description: "description",
-		UserId:      userId,
+		UserID:      userID,
 		NotifyAt:    initialTime.Add(time.Hour * -24),
 	}
 }
