@@ -39,7 +39,7 @@ func main() {
 
 	r := new(postgres.Repo)
 	s := new(server.Instance)
-	l := new(logger.LoggerInstance)
+	l := new(logger.Instance)
 
 	a, err := app.New(r, s, l)
 	if err != nil {
