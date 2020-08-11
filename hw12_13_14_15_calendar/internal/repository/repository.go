@@ -10,7 +10,7 @@ type BaseRepo interface {
 	Close() error
 	AddEvent(event Event) error
 	UpdateEvent(event Event) error
-	DeleteEvent(userID ID, eventId ID) error
+	DeleteEvent(userID ID, eventID ID) error
 	GetEventsDay(userID ID, from time.Time) ([]Event, error)
 	GetEventsWeek(userID ID, from time.Time) ([]Event, error)
 	GetEventsMonth(userID ID, from time.Time) ([]Event, error)

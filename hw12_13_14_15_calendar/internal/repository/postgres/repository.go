@@ -3,9 +3,9 @@ package postgres
 import (
 	"calendar/internal/repository"
 	"context"
-	_ "github.com/jackc/pgx/v4/stdlib"
-	"github.com/jmoiron/sqlx"
 	"time"
+
+	"github.com/jmoiron/sqlx"
 )
 
 type Repo struct {
@@ -51,10 +51,10 @@ func (r *Repo) UpdateEvent(event repository.Event) (err error) {
 	return
 }
 
-func (r *Repo) DeleteEvent(userID repository.ID, eventId repository.ID) (err error) {
+func (r *Repo) DeleteEvent(userID repository.ID, eventID repository.ID) (err error) {
 	var events []repository.Event
 	option := make(map[string]interface{})
-	option["event_id"] = eventId
+	option["event_id"] = eventID
 	option["user_id"] = userID
 
 	nstmt, err := r.db.PrepareNamed("DELETE FROM events WHERE  user_id = :user_id and id=:event_id")

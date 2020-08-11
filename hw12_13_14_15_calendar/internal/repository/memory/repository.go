@@ -37,11 +37,11 @@ func (m *MemoryDb) UpdateEvent(event repository.Event) error {
 	return nil
 }
 
-func (m *MemoryDb) DeleteEvent(userID repository.ID, eventId repository.ID) error {
+func (m *MemoryDb) DeleteEvent(userID repository.ID, eventID repository.ID) error {
 	var newEvents []repository.Event
 
 	for _, e := range m.events {
-		if e.Id == eventId {
+		if e.Id == eventID {
 			if e.UserID != userID {
 				return errors.New("unauthorized request")
 			}
