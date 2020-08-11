@@ -10,16 +10,16 @@ type BaseRepo interface {
 	Close() error
 	AddEvent(event Event) error
 	UpdateEvent(event Event) error
-	DeleteEvent(userId Id, eventId Id) error
-	GetEventsDay(userId Id, from time.Time) ([]Event, error)
-	GetEventsWeek(userId Id, from time.Time) ([]Event, error)
-	GetEventsMonth(userId Id, from time.Time) ([]Event, error)
+	DeleteEvent(userId ID, eventId ID) error
+	GetEventsDay(userId ID, from time.Time) ([]Event, error)
+	GetEventsWeek(userId ID, from time.Time) ([]Event, error)
+	GetEventsMonth(userId ID, from time.Time) ([]Event, error)
 }
 
-type Id = int
+type ID = int
 
 type Event struct {
-	Id          Id
+	Id          ID
 	Title       string
 	StartAt     time.Time `db:"start_at"`
 	EndAt       time.Time `db:"end_at"`
@@ -29,5 +29,5 @@ type Event struct {
 }
 
 type User struct {
-	Id
+	ID
 }

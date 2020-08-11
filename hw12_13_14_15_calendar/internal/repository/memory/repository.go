@@ -37,7 +37,7 @@ func (m *MemoryDb) UpdateEvent(event repository.Event) error {
 	return nil
 }
 
-func (m *MemoryDb) DeleteEvent(userId repository.Id, eventId repository.Id) error {
+func (m *MemoryDb) DeleteEvent(userId repository.ID, eventId repository.ID) error {
 	var newEvents []repository.Event
 
 	for _, e := range m.events {
@@ -57,7 +57,7 @@ func (m *MemoryDb) DeleteEvent(userId repository.Id, eventId repository.Id) erro
 	return nil
 }
 
-func filterDates(userId repository.Id, events []repository.Event, from time.Time, to time.Time) []repository.Event {
+func filterDates(userId repository.ID, events []repository.Event, from time.Time, to time.Time) []repository.Event {
 	var dayEvents []repository.Event
 
 	for _, e := range events {
@@ -69,14 +69,14 @@ func filterDates(userId repository.Id, events []repository.Event, from time.Time
 	return dayEvents
 }
 
-func (m *MemoryDb) GetEventsDay(userId repository.Id, from time.Time) ([]repository.Event, error) {
+func (m *MemoryDb) GetEventsDay(userId repository.ID, from time.Time) ([]repository.Event, error) {
 	return filterDates(userId, m.events, from, from.AddDate(0, 0, 1)), nil
 }
 
-func (m *MemoryDb) GetEventsWeek(userId repository.Id, from time.Time) ([]repository.Event, error) {
+func (m *MemoryDb) GetEventsWeek(userId repository.ID, from time.Time) ([]repository.Event, error) {
 	return filterDates(userId, m.events, from, from.AddDate(0, 0, 7)), nil
 }
 
-func (m *MemoryDb) GetEventsMonth(userId repository.Id, from time.Time) ([]repository.Event, error) {
+func (m *MemoryDb) GetEventsMonth(userId repository.ID, from time.Time) ([]repository.Event, error) {
 	return filterDates(userId, m.events, from, from.AddDate(0, 1, 0)), nil
 }

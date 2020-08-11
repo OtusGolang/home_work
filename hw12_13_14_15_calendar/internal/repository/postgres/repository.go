@@ -51,7 +51,7 @@ func (r *Repo) UpdateEvent(event repository.Event) (err error) {
 	return
 }
 
-func (r *Repo) DeleteEvent(userId repository.Id, eventId repository.Id) (err error) {
+func (r *Repo) DeleteEvent(userId repository.ID, eventId repository.ID) (err error) {
 	var events []repository.Event
 	option := make(map[string]interface{})
 	option["event_id"] = eventId
@@ -68,7 +68,7 @@ func (r *Repo) DeleteEvent(userId repository.Id, eventId repository.Id) (err err
 	return
 }
 
-func (r *Repo) getEvents(userId repository.Id, from time.Time, to time.Time) ([]repository.Event, error) {
+func (r *Repo) getEvents(userId repository.ID, from time.Time, to time.Time) ([]repository.Event, error) {
 	var events []repository.Event
 	option := make(map[string]interface{})
 	option["start"] = from
@@ -86,14 +86,14 @@ func (r *Repo) getEvents(userId repository.Id, from time.Time, to time.Time) ([]
 	return events, err
 }
 
-func (r *Repo) GetEventsDay(userId repository.Id, from time.Time) ([]repository.Event, error) {
+func (r *Repo) GetEventsDay(userId repository.ID, from time.Time) ([]repository.Event, error) {
 	return r.getEvents(userId, from, from.Add(time.Hour*24))
 }
 
-func (r *Repo) GetEventsWeek(userId repository.Id, from time.Time) ([]repository.Event, error) {
+func (r *Repo) GetEventsWeek(userId repository.ID, from time.Time) ([]repository.Event, error) {
 	return r.getEvents(userId, from, from.AddDate(0, 0, 7))
 }
 
-func (r *Repo) GetEventsMonth(userId repository.Id, from time.Time) ([]repository.Event, error) {
+func (r *Repo) GetEventsMonth(userId repository.ID, from time.Time) ([]repository.Event, error) {
 	return r.getEvents(userId, from, from.AddDate(0, 1, 0))
 }
