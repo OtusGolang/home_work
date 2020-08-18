@@ -6,7 +6,11 @@ type Server struct {
 	// TODO
 }
 
-func NewServer(a AppI) *Server {
+type Application interface {
+	// TODO
+}
+
+func NewServer(app Application) *Server {
 	return &Server{}
 }
 

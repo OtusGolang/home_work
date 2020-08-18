@@ -10,7 +10,15 @@ type App struct {
 	// TODO
 }
 
-func New(logger LoggerI, storage StorageI) *App {
+type Logger interface {
+	// TODO
+}
+
+type Storage interface {
+	// TODO
+}
+
+func New(logger Logger, storage Storage) *App {
 	return &App{}
 }
 

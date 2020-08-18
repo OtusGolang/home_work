@@ -8,9 +8,7 @@ type Storage struct {
 }
 
 func New() *Storage {
-	return &Storage{
-		mu: sync.RWMutex{},
-	}
+	return &Storage{}
 }
 
 // TODO
