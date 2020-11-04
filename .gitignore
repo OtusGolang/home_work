@@ -24,3 +24,4 @@ go-telnet
 .Trashes
 ehthumbs.db
 Thumbs.db
+.vscode/
