@@ -5,6 +5,7 @@ linters:
   disable-all: false
   enable-all: true
   disable:
+    - exhaustive
     - exhaustivestruct
     - goerr113
     - gochecknoglobals
@@ -15,4 +16,6 @@ linters:
     - lll
     - nakedret
     - nlreturn
+    - testpackage
     - wsl
+    - wrapcheck
