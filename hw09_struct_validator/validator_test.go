@@ -38,9 +38,8 @@ type (
 
 func TestValidate(t *testing.T) {
 	tests := []struct {
-		in                     interface{}
-		expectedErr            error
-		expectedValidationErrs []ValidationError
+		in          interface{}
+		expectedErr error
 	}{
 		{
 			// Place your code here

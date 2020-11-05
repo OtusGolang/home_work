@@ -1,6 +1,17 @@
 package hw09_struct_validator //nolint:golint,stylecheck
 
-func Validate(v interface{}) ([]ValidationError, error) {
+type ValidationError struct {
+	Field string
+	Err   error
+}
+
+type ValidationErrors []ValidationError
+
+func (v ValidationErrors) Error() string {
+	panic("implement me")
+}
+
+func Validate(v interface{}) error {
 	// Place your code here
-	return nil, nil
+	return nil
 }
