@@ -1,5 +1,5 @@
 ## Домашние задания курса OTUS «Разработчик Golang»
-1) [«Hello now»](./hw01_hello_now)
+1) [«Hello, OTUS!»](./hw01_hello_otus)
 2) [«Распаковка строки»](./hw02_unpack_string)
 3) [«Частотный анализ»](./hw03_frequency_analysis)
 4) [«LRU-кэш»](./hw04_lru_cache)
