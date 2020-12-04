@@ -14,7 +14,7 @@ RUN go mod download
 COPY . ${CODE_DIR}
 
 # Собираем статический бинарник Go (без зависимостей на Си API),
-# иначе он не будет работать в apline образе.
+# иначе он не будет работать в alpine образе.
 ARG LDFLAGS
 RUN CGO_ENABLED=0 go build \
         -ldflags "$LDFLAGS" \
