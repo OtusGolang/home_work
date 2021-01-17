@@ -40,7 +40,7 @@ jobs:
 
     - stage: "Tests"
       name: "Linters"
-      install: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(shell go env GOPATH)/bin v1.33.0
+      install: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.33.0
       script: golangci-lint run ./...
       if: |
         (type = push AND branch != hw12_13_14_15_calendar) OR \
