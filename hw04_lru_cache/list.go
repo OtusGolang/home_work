@@ -4,7 +4,7 @@ type List interface {
 	// Place your code here
 }
 
-type listItem struct {
+type ListItem struct {
 	// Place your code here
 }
 
@@ -13,5 +13,5 @@ type list struct {
 }
 
 func NewList() List {
-	return &list{}
+	return new(list)
 }
