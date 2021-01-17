@@ -7,16 +7,20 @@ type Cache interface {
 }
 
 type lruCache struct {
-	// Place your code here:
-	// - capacity
-	// - queue
-	// - items
+	capacity int
+	queue    List
+	items    map[Key]*ListItem
 }
 
 type cacheItem struct {
-	// Place your code here
+	key   string
+	value interface{}
 }
 
 func NewCache(capacity int) Cache {
-	return &lruCache{}
+	return &lruCache{
+		capacity: capacity,
+		queue:    NewList(),
+		items:    make(map[Key]ListItem, capacity),
+	}
 }
