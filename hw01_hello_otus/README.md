@@ -5,7 +5,7 @@
 Hello, OTUS!
 ```
 
-Для переворота строки следует воспользоваться возможностями 
+Для переворота строки следует воспользоваться возможностями
 [github.com/golang/example/stringutil](https://github.com/golang/example/tree/master/stringutil).
 
 Кроме этого необходимо исправить **go.mod** так, чтобы для данного модуля работала
