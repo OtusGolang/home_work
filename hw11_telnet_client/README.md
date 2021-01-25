@@ -25,12 +25,12 @@ $ go-telnet --timeout=3s 1.1.1.1 123
 
 Примеры работы:
 
-1) Сервер обрывает соединение 
+1) Сервер обрывает соединение
 ```bash
 $ nc -l localhost 4242
 Hello from NC
 I'm telnet client
-Bye, client!          
+Bye, client!
 ^C
 ```
 
@@ -40,7 +40,7 @@ $ go-telnet --timeout=5s localhost 4242
 Hello from NC
 I'm telnet client
 Bye, client!
-Bye-bye 
+Bye-bye
 ...Connection was closed by peer
 ```
 
