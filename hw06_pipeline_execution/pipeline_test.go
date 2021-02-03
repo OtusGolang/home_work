@@ -14,7 +14,7 @@ const (
 )
 
 func TestPipeline(t *testing.T) {
-	// Stage generator
+	// Stage generator.
 	g := func(name string, f func(v interface{}) interface{}) Stage {
 		return func(in In) Out {
 			out := make(Bi)
@@ -57,7 +57,7 @@ func TestPipeline(t *testing.T) {
 		require.Equal(t, []string{"102", "104", "106", "108", "110"}, result)
 		require.Less(t,
 			int64(elapsed),
-			// ~0.8s for processing 5 values in 4 stages (100ms every) concurrently
+			// ~0.8s for processing 5 values in 4 stages (100ms every) concurrently.
 			int64(sleepPerStage)*int64(len(stages)+len(data)-1)+int64(fault))
 	})
 
@@ -66,7 +66,7 @@ func TestPipeline(t *testing.T) {
 		done := make(Bi)
 		data := []int{1, 2, 3, 4, 5}
 
-		// Abort after 200ms
+		// Abort after 200ms.
 		abortDur := sleepPerStage * 2
 		go func() {
 			<-time.After(abortDur)
