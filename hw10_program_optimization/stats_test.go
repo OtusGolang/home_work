@@ -1,6 +1,6 @@
 // +build !bench
 
-package hw10_program_optimization //nolint:golint,stylecheck
+package hw10programoptimization
 
 import (
 	"bytes"

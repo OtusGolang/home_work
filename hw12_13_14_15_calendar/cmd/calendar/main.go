@@ -58,6 +58,7 @@ func main() {
 
 	if err := server.Start(ctx); err != nil {
 		logg.Error("failed to start http server: " + err.Error())
-		os.Exit(1)
+		cancel()
+		os.Exit(1) //nolint:gocritic
 	}
 }

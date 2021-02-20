@@ -1,4 +1,4 @@
-package hw03_frequency_analysis //nolint:golint
+package hw03frequencyanalysis
 
 import (
 	"testing"
@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// Change to true if needed
+// Change to true if needed.
 var taskWithAsteriskIsCompleted = false
 
 var text = `Как видите, он  спускается  по  лестнице  вслед  за  своим
