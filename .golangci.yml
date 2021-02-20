@@ -24,6 +24,7 @@ linters:
     - gocyclo
     - godot
     - gofmt
+    - gofumpt
     - goheader
     - goimports
     - golint
@@ -32,6 +33,7 @@ linters:
     - gosec
     - gosimple
     - govet
+    - ifshort
     - ineffassign
     - interfacer
     - maligned
@@ -40,6 +42,7 @@ linters:
     - noctx
     - nolintlint
     - prealloc
+    - predeclared
     - rowserrcheck
     - scopelint
     - sqlclosecheck
