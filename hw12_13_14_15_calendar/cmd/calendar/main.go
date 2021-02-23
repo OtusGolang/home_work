@@ -42,7 +42,12 @@ func main() {
 		signals := make(chan os.Signal, 1)
 		signal.Notify(signals, syscall.SIGINT, syscall.SIGHUP)
 
-		<-signals
+		select {
+		case <-ctx.Done():
+			return
+		case <-signals:
+		}
+
 		signal.Stop(signals)
 		cancel()
 
