@@ -61,8 +61,6 @@ func TestTop10(t *testing.T) {
 				"если",      // 4
 				"кристофер", // 4
 				"не",        // 4
-				"робин",     // 4
-				"то",        // 4
 			}
 			require.Equal(t, expected, Top10(text))
 		} else {
