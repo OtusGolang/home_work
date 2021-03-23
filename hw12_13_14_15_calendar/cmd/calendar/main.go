@@ -35,21 +35,13 @@ func main() {
 	calendar := app.New(logg, storage)
 
 	server := internalhttp.NewServer(calendar)
-	ctx, cancel := context.WithCancel(context.Background())
+
+	ctx, cancel := signal.NotifyContext(context.Background(),
+		syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
 	defer cancel()
 
 	go func() {
-		signals := make(chan os.Signal, 1)
-		signal.Notify(signals, syscall.SIGINT, syscall.SIGHUP)
-
-		select {
-		case <-ctx.Done():
-			return
-		case <-signals:
-		}
-
-		signal.Stop(signals)
-		cancel()
+		<-ctx.Done()
 
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 		defer cancel()
