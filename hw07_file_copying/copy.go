@@ -59,7 +59,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	for i := offset; i < offset+limit; i += bufsize {
 		copylen := int64(math.Min(bufsize, float64(limit)))
 		c, err := io.CopyN(to, from, copylen)
-		if (err != nil && err != io.EOF) || c > limit {
+		if (err != nil && !errors.Is(err, io.EOF)) || c > limit {
 			return err
 		}
 	}
