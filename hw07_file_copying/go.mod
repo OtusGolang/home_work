@@ -1,4 +1,4 @@
-module github.com/almevik/home-work/hw07_file_copying
+module github.com/almevik/home_work/hw07_file_copying
 
 go 1.16
 
