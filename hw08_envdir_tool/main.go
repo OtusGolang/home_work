@@ -1,5 +1,5 @@
 package main
 
 func main() {
-	// Place your code here
+	// Place your code here.
 }
