@@ -8,7 +8,7 @@ import (
 )
 
 func TestCopy(t *testing.T) {
-	err := Copy("testdata/input.txt", "out.txt", 0 ,0)
+	err := Copy("testdata/input.txt", "out.txt", 0, 0)
 
 	require.Nil(t, err)
 }
