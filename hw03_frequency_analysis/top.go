@@ -1,6 +1,6 @@
-package hw03_frequency_analysis //nolint:golint,stylecheck
+package hw03frequencyanalysis
 
 func Top10(_ string) []string {
-	// Place your code here
+	// Place your code here.
 	return nil
 }

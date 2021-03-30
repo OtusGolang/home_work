@@ -1,4 +1,4 @@
-package hw06_pipeline_execution //nolint:golint,stylecheck
+package hw06pipelineexecution
 
 type (
 	In  = <-chan interface{}
@@ -9,6 +9,6 @@ type (
 type Stage func(in In) (out Out)
 
 func ExecutePipeline(in In, done In, stages ...Stage) Out {
-	// Place your code here
+	// Place your code here.
 	return nil
 }
