@@ -1,12 +1,26 @@
 run:
-  tests: false
+  tests: true
+  build-tags:
+    - bench
+    - !bench
 
 linters-settings:
   funlen:
     lines: 150
     statements: 80
 
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - errcheck
+        - dupl
+        - gocyclo
+        - gosec
+        - scopelint
+
 linters:
+  disable-all: true
   enable:
     - asciicheck
     - bodyclose
@@ -14,6 +28,7 @@ linters:
     - depguard
     - dogsled
     - dupl
+    - durationcheck
     - errorlint
     - exportloopref
     - funlen
@@ -24,6 +39,7 @@ linters:
     - gocyclo
     - godot
     - gofmt
+    - gofumpt
     - goheader
     - goimports
     - golint
@@ -32,6 +48,7 @@ linters:
     - gosec
     - gosimple
     - govet
+    - ifshort
     - ineffassign
     - interfacer
     - maligned
@@ -40,13 +57,13 @@ linters:
     - noctx
     - nolintlint
     - prealloc
+    - predeclared
     - rowserrcheck
     - scopelint
     - sqlclosecheck
     - staticcheck
     - structcheck
     - stylecheck
-    - tparallel
     - typecheck
     - unconvert
     - unparam
