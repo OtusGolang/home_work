@@ -8,7 +8,7 @@ import (
 
 func TestReadDir(t *testing.T) {
 	t.Run("read", func(t *testing.T) {
-		var expected = Environment {
+		expected := Environment{
 			"BAR":   {"bar", false},
 			"UNSET": {"", true},
 			"EMPTY": {"", true},
