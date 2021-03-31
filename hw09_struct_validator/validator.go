@@ -15,7 +15,7 @@ var (
 	ErrorRule                 = errors.New("ошибка в правилах валидации")
 	ErrorRuleValueIsNotNumber = errors.New("значение не является числом")
 	ErrorRegexp = func(err error, reg string) error {
-		return fmt.Errorf("некорректное регулярное выражение: %w, %w", reg, err)
+		return fmt.Errorf("некорректное регулярное выражение: %v, %v", reg, err)
 	}
 )
 
