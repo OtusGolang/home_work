@@ -14,10 +14,8 @@ var (
 	ErrorValue                = errors.New("значение не соответствует правилу")
 	ErrorUnknownRule          = errors.New("неизвестное правило")
 	ErrorRule                 = errors.New("ошибка в правилах валидации")
-	ErrorRuleValueIsNotNumber = errors.New("значение не является числом")
-	ErrorRegexp               = func(err error, reg string) error {
-		return fmt.Errorf("некорректное регулярное выражение: %v, %w", reg, err)
-	}
+	ErrorRuleValueIsNotNumber = errors.New("значение правила не является числом")
+	ErrorRegexp               = errors.New("некорректное регулярное выражение")
 )
 
 type ValidationError struct {
@@ -101,7 +99,7 @@ func validate(value interface{}, name string, rules string) ValidationErrors {
 		rulesArr := strings.SplitN(rule, ":", 2)
 
 		if len(rulesArr) != 2 {
-			vErr = append(vErr, appendErr(name, ErrorRule, rule))
+			vErr = append(vErr, appendErr(name, ErrorRule))
 			continue
 		}
 
@@ -114,7 +112,7 @@ func validate(value interface{}, name string, rules string) ValidationErrors {
 		}
 
 		if !ok {
-			vErr = append(vErr, appendErr(name, ErrorValue, rule, " (value=", toString(value), ")"))
+			vErr = append(vErr, appendErr(name, ErrorValue))
 		}
 	}
 
@@ -146,10 +144,21 @@ func validateValue(val string, rName string, rVal string) (bool, error) {
 			return false, ErrorRuleValueIsNotNumber
 		}
 		return val >= ruleVal, nil
+	case "max":
+		val, err := strconv.ParseFloat(val, 64)
+		if err != nil {
+			return false, ErrorRuleValueIsNotNumber
+		}
+
+		ruleVal, err := strconv.ParseFloat(rVal, 64)
+		if err != nil {
+			return false, ErrorRuleValueIsNotNumber
+		}
+		return val <= ruleVal, nil
 	case "regexp":
 		reg, err := regexp.Compile(rVal)
 		if err != nil {
-			return false, ErrorRegexp(err, rVal)
+			return false, ErrorRegexp
 		}
 		return reg.MatchString(val), nil
 	case "in":
@@ -164,11 +173,10 @@ func validateValue(val string, rName string, rVal string) (bool, error) {
 	return false, ErrorUnknownRule
 }
 
-// Форматирует ошибку.
-func appendErr(name string, err error, s ...string) ValidationError {
+func appendErr(name string, err error) ValidationError {
 	return ValidationError{
 		Field: name,
-		Err:   fmt.Errorf("%w, %s", err, s),
+		Err:   err,
 	}
 }
 
