@@ -9,11 +9,14 @@ import (
 )
 
 var (
-	ErrorNotStruct            = errors.New("Тип не является структурой")
-	ErrorValue                = errors.New("Значение не соответствует правилу")
-	ErrorUnknownRule          = errors.New("Неизвестное правило")
-	ErrorRule                 = errors.New("Ошибка в правилах валидации")
-	ErrorRuleValueIsNotNumber = errors.New("Значение не является числом")
+	ErrorNotStruct            = errors.New("тип не является структурой")
+	ErrorValue                = errors.New("значение не соответствует правилу")
+	ErrorUnknownRule          = errors.New("неизвестное правило")
+	ErrorRule                 = errors.New("ошибка в правилах валидации")
+	ErrorRuleValueIsNotNumber = errors.New("значение не является числом")
+	ErrorRegexp = func(err error, reg string) error {
+		return fmt.Errorf("некорректное регулярное выражение: %w, %w", reg, err)
+	}
 )
 
 type ValidationError struct {
@@ -21,59 +24,12 @@ type ValidationError struct {
 	Err   error
 }
 
-var ruleFunctions = map[string]func(fieldValue, ruleValue string) (bool, error){
-	"len": func(fieldValue, ruleValue string) (bool, error) {
-		mustLen, err := strconv.ParseFloat(ruleValue, 64)
-		if err != nil {
-			return false, ErrorRuleValueIsNotNumber
-		}
-		return len([]rune(fieldValue)) == int(mustLen), nil
-	},
-	"min": func(fieldValue, ruleValue string) (bool, error) {
-		val, err := strconv.ParseFloat(fieldValue, 64)
-		if err != nil {
-			return false, ErrorRuleValueIsNotNumber
-		}
-		mustMin, err := strconv.ParseFloat(ruleValue, 64)
-		if err != nil {
-			return false, ErrorRuleValueIsNotNumber
-		}
-		return val >= mustMin, nil
-	},
-	"max": func(fieldValue, ruleValue string) (bool, error) {
-		val, err := strconv.ParseFloat(fieldValue, 64)
-		if err != nil {
-			return false, ErrorRuleValueIsNotNumber
-		}
-		mustMax, err := strconv.ParseFloat(ruleValue, 64)
-		if err != nil {
-			return false, ErrorRuleValueIsNotNumber
-		}
-		return val <= mustMax, nil
-	},
-	"regexp": func(fieldValue, ruleValue string) (bool, error) {
-		reg, err := regexp.Compile(ruleValue)
-		if err != nil {
-			return false, fmt.Errorf("rule value is not valid regexp: %w", err)
-		}
-		return reg.MatchString(fieldValue), nil
-	},
-	"in": func(fieldValue, ruleValue string) (bool, error) { //nolint:unparam
-		for _, s := range strings.Split(ruleValue, ",") {
-			if s == fieldValue {
-				return true, nil
-			}
-		}
-		return false, nil
-	},
-}
-
 type ValidationErrors []ValidationError
 
 func (v ValidationErrors) Error() string {
 	var resultString string
-	for _, error := range v {
-		resultString += fmt.Sprintf("error in field: %v, %v\n", error.Field, error.Err)
+	for _, err := range v {
+		resultString += fmt.Sprintf("error in field: %v, %v\n", err.Field, err.Err)
 	}
 	return resultString
 }
@@ -100,10 +56,11 @@ func Validate(v interface{}) error {
 		}
 
 		fieldName := val.Type().Field(i).Name
-
 		var values []interface{}
+		// Собираем значения полей из разных структур
 		values = collectValues(values, valueOf)
 
+		// Для всех значений проводим валидацию
 		for _, value := range values {
 			vErrors = append(vErrors, validate(value, fieldName, tag)...)
 		}
@@ -139,7 +96,7 @@ func validate(value interface{}, name string, rules string) ValidationErrors {
 	var vErr ValidationErrors
 
 	for _, rule := range strings.Split(rules, "|") {
-		// Чтобы обработатть несколько правил
+		// Чтобы обработать несколько правил
 		rulesArr := strings.SplitN(rule, ":", 2)
 
 		if len(rulesArr) != 2 {
@@ -149,18 +106,12 @@ func validate(value interface{}, name string, rules string) ValidationErrors {
 
 		rName := rulesArr[0]
 		rVal := rulesArr[1]
-		//ruleFunction, ok := ruleFunctions[rName]
-		_, ok := validateValue(rName, rVal)
-
-		if !ok {
-			vErr = append(vErr, appendErr(name, ErrorUnknownRule, rName))
-			continue
-		}
-		ok, err := ruleFunction(toString(value), rVal)
+		ok, err := validateValue(toString(value), rName, rVal)
 		if err != nil {
 			vErr = append(vErr, appendErr(name, err))
 			continue
 		}
+
 		if !ok {
 			vErr = append(vErr, appendErr(name, ErrorValue, rule, " (value=", toString(value), ")"))
 		}
@@ -173,10 +124,11 @@ func validate(value interface{}, name string, rules string) ValidationErrors {
 	return vErr
 }
 
-func validateValue(name string, val string, rule string) (bool, error) {
-	switch name {
+// Валидация конкретного значения по правилу
+func validateValue(val string, rName string, rVal string) (bool, error) {
+	switch rName {
 	case "len":
-		ruleVal, err := strconv.ParseFloat(rule, 64)
+		ruleVal, err := strconv.ParseFloat(rVal, 64)
 		if err != nil {
 			return false, ErrorRuleValueIsNotNumber
 		}
@@ -188,58 +140,27 @@ func validateValue(name string, val string, rule string) (bool, error) {
 			return false, ErrorRuleValueIsNotNumber
 		}
 
-		ruleVal, err := strconv.ParseFloat(rule, 64)
+		ruleVal, err := strconv.ParseFloat(rVal, 64)
 		if err != nil {
 			return false, ErrorRuleValueIsNotNumber
 		}
 		return val >= ruleVal, nil
-
-	}
-
-	"len": func(fieldValue, ruleValue string) (bool, error) {
-		mustLen, err := strconv.ParseFloat(ruleValue, 64)
+	case "regexp":
+		reg, err := regexp.Compile(rVal)
 		if err != nil {
-			return false, ErrorRuleValueIsNotNumber
+			return false, ErrorRegexp(err, rVal)
 		}
-		return len([]rune(fieldValue)) == int(mustLen), nil
-	},
-		"min": func(fieldValue, ruleValue string) (bool, error) {
-		val, err := strconv.ParseFloat(fieldValue, 64)
-		if err != nil {
-			return false, ErrorRuleValueIsNotNumber
-		}
-		mustMin, err := strconv.ParseFloat(ruleValue, 64)
-		if err != nil {
-			return false, ErrorRuleValueIsNotNumber
-		}
-		return val >= mustMin, nil
-	},
-		"max": func(fieldValue, ruleValue string) (bool, error) {
-		val, err := strconv.ParseFloat(fieldValue, 64)
-		if err != nil {
-			return false, ErrorRuleValueIsNotNumber
-		}
-		mustMax, err := strconv.ParseFloat(ruleValue, 64)
-		if err != nil {
-			return false, ErrorRuleValueIsNotNumber
-		}
-		return val <= mustMax, nil
-	},
-		"regexp": func(fieldValue, ruleValue string) (bool, error) {
-		reg, err := regexp.Compile(ruleValue)
-		if err != nil {
-			return false, fmt.Errorf("rule value is not valid regexp: %w", err)
-		}
-		return reg.MatchString(fieldValue), nil
-	},
-		"in": func(fieldValue, ruleValue string) (bool, error) { //nolint:unparam
-		for _, s := range strings.Split(ruleValue, ",") {
-			if s == fieldValue {
+		return reg.MatchString(val), nil
+	case "in":
+		for _, s := range strings.Split(rVal, ",") {
+			if s == val {
 				return true, nil
 			}
 		}
 		return false, nil
-	},
+	}
+
+	return false, ErrorUnknownRule
 }
 
 // Форматирует ошибку

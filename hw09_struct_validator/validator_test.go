@@ -3,6 +3,7 @@ package hw09_struct_validator //nolint:golint,stylecheck
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/stretchr/testify/require"
 	"testing"
 )
 
@@ -42,15 +43,37 @@ func TestValidate(t *testing.T) {
 		expectedErr error
 	}{
 		{
-			// Place your code here
+			User{
+				ID:    "d8f4590320e1343a915lb69410650a8f359d",
+				Name:  "Positive",
+				Age:   50,
+				Email: "test@test.ru",
+				Role:  "admi",
+				Phones: []string{
+					"89999999999",
+				},
+			},
+			nil,
 		},
-		// ...
-		// Place your code here
+		{
+			App{
+				Version: "12.05",
+			},
+			nil,
+		},
+		{
+			Response{
+				Code: 200,
+				Body: "",
+			},
+			nil,
+		},
 	}
 
 	for i, tt := range tests {
-		t.Run(fmt.Sprintf("case %d", i), func(t *testing.T) {
-			// Place your code here
+		t.Run(fmt.Sprintf("positive case %d", i), func(t *testing.T) {
+			err := Validate(tt.in)
+			require.Equal(t, tt.expectedErr, err)
 		})
 	}
 }
