@@ -15,7 +15,6 @@ func main() {
 	eDir := os.Args[1]
 	args := os.Args[2:]
 	env, err := ReadDir(eDir)
-
 	if err != nil {
 		log.Fatalln(err)
 	}

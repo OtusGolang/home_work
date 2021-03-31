@@ -57,7 +57,6 @@ func getVal(dir string, fInfo os.FileInfo) (string, error) {
 
 	fPath := filepath.Join(dir, fInfo.Name())
 	file, err := os.Open(fPath)
-
 	// Доступен ли на чтение
 	if err != nil {
 		return "", err
