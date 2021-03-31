@@ -1,10 +1,10 @@
 package hw09_struct_validator //nolint:golint,stylecheck
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 type UserRole string
@@ -18,17 +18,10 @@ type (
 		Email  string   `validate:"regexp:^\\w+@\\w+\\.\\w+$"`
 		Role   UserRole `validate:"in:admin,stuff"`
 		Phones []string `validate:"len:11"`
-		meta   json.RawMessage
 	}
 
 	App struct {
 		Version string `validate:"len:5"`
-	}
-
-	Token struct {
-		Header    []byte
-		Payload   []byte
-		Signature []byte
 	}
 
 	Response struct {

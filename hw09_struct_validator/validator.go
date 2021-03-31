@@ -1,4 +1,5 @@
 package hw09_struct_validator //nolint:golint,stylecheck
+
 import (
 	"errors"
 	"fmt"
@@ -14,8 +15,8 @@ var (
 	ErrorUnknownRule          = errors.New("неизвестное правило")
 	ErrorRule                 = errors.New("ошибка в правилах валидации")
 	ErrorRuleValueIsNotNumber = errors.New("значение не является числом")
-	ErrorRegexp = func(err error, reg string) error {
-		return fmt.Errorf("некорректное регулярное выражение: %v, %v", reg, err)
+	ErrorRegexp               = func(err error, reg string) error {
+		return fmt.Errorf("некорректное регулярное выражение: %v, %w", reg, err)
 	}
 )
 
@@ -73,7 +74,7 @@ func Validate(v interface{}) error {
 	return vErrors
 }
 
-// Собирает значения полей из разных структур
+// Собирает значения полей из разных структур.
 func collectValues(values []interface{}, value reflect.Value) []interface{} {
 	switch value.Kind() {
 	case reflect.Slice, reflect.Array:
@@ -91,7 +92,7 @@ func collectValues(values []interface{}, value reflect.Value) []interface{} {
 	return values
 }
 
-// Выполняет валидацию масива значений по типу структуры и набору правил
+// Выполняет валидацию масива значений по типу структуры и набору правил.
 func validate(value interface{}, name string, rules string) ValidationErrors {
 	var vErr ValidationErrors
 
@@ -124,7 +125,7 @@ func validate(value interface{}, name string, rules string) ValidationErrors {
 	return vErr
 }
 
-// Валидация конкретного значения по правилу
+// Валидация конкретного значения по правилу.
 func validateValue(val string, rName string, rVal string) (bool, error) {
 	switch rName {
 	case "len":
@@ -163,7 +164,7 @@ func validateValue(val string, rName string, rVal string) (bool, error) {
 	return false, ErrorUnknownRule
 }
 
-// Форматирует ошибку
+// Форматирует ошибку.
 func appendErr(name string, err error, s ...string) ValidationError {
 	return ValidationError{
 		Field: name,
