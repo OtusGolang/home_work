@@ -10,6 +10,6 @@ var (
 )
 
 func Copy(fromPath, toPath string, offset, limit int64) error {
-	// Place your code here
+	// Place your code here.
 	return nil
 }

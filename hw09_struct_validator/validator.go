@@ -1,4 +1,4 @@
-package hw09_struct_validator //nolint:golint,stylecheck
+package hw09structvalidator
 
 type ValidationError struct {
 	Field string
@@ -12,6 +12,6 @@ func (v ValidationErrors) Error() string {
 }
 
 func Validate(v interface{}) error {
-	// Place your code here
+	// Place your code here.
 	return nil
 }

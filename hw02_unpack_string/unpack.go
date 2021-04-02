@@ -1,4 +1,4 @@
-package hw02_unpack_string //nolint:golint,stylecheck
+package hw02unpackstring
 
 import (
 	"errors"
@@ -7,6 +7,6 @@ import (
 var ErrInvalidString = errors.New("invalid string")
 
 func Unpack(_ string) (string, error) {
-	// Place your code here
+	// Place your code here.
 	return "", nil
 }

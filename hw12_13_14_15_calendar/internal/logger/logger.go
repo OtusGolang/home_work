@@ -2,8 +2,7 @@ package logger
 
 import "fmt"
 
-type Logger struct {
-	// TODO
+type Logger struct { // TODO
 }
 
 func New(level string) *Logger {

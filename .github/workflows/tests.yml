@@ -1,0 +1,95 @@
+name: Otus homework tests
+
+on:
+  push:
+    branches:
+      - hw*
+
+env:
+  GO111MODULE: "on"
+
+jobs:
+  go_get:
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.ref, 'calendar') }}
+    steps:
+      - name: Extract branch name
+        run: echo "BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16
+
+      - name: go get
+        run: cd /tmp && go get -v "github.com/${GITHUB_REPOSITORY}/${BRANCH}@${BRANCH}"
+
+  lint:
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.ref, 'calendar') }}
+    steps:
+      - name: Extract branch name
+        run: echo "BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Linters
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: v1.37
+          working-directory: ${{ env.BRANCH }}
+
+  tests:
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.ref, 'calendar') }}
+    steps:
+      - name: Extract branch name
+        run: echo "BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Unit tests
+        run: go test -v -count=1 -race -timeout=1m ./...
+        working-directory: ${{ env.BRANCH }}
+
+      - name: Optimization tests
+        run: go test -v -count=1 -timeout=1m -tags bench ./...
+        if: env.BRANCH == 'hw10_program_optimization'
+        working-directory: ${{ env.BRANCH }}
+
+      - name: Bash tests
+        shell: bash
+        run: ./test.sh
+        if: contains('hw01_hello_otus hw07_file_copying hw08_envdir_tool hw11_telnet_client', env.BRANCH)
+        working-directory: ${{ env.BRANCH }}
+
+  tests_by_makefile:
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'calendar')
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: make lint
+        run: make lint
+        working-directory: hw12_13_14_15_calendar
+
+      - name: make build
+        run: make build
+        working-directory: hw12_13_14_15_calendar
+
+      - name: make test
+        run: make test
+        working-directory: hw12_13_14_15_calendar
