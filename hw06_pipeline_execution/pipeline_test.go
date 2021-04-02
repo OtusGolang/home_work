@@ -1,4 +1,4 @@
-package hw06pipelineexecution
+package pipelineexecution
 
 import (
 	"strconv"
