@@ -1,4 +1,4 @@
-package hw09_struct_validator //nolint:golint,stylecheck
+package hw09structvalidator
 
 import (
 	"encoding/json"
@@ -42,15 +42,19 @@ func TestValidate(t *testing.T) {
 		expectedErr error
 	}{
 		{
-			// Place your code here
+			// Place your code here.
 		},
 		// ...
-		// Place your code here
+		// Place your code here.
 	}
 
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("case %d", i), func(t *testing.T) {
-			// Place your code here
+			tt := tt
+			t.Parallel()
+
+			// Place your code here.
+			_ = tt
 		})
 	}
 }

@@ -1,4 +1,4 @@
-package hw04_lru_cache //nolint:golint,stylecheck
+package hw04lrucache
 
 import (
 	"math/rand"
@@ -55,7 +55,7 @@ func TestCache(t *testing.T) {
 }
 
 func TestCacheMultithreading(t *testing.T) {
-	t.Skip() // NeedRemove if task with asterisk completed
+	t.Skip() // Remove me if task with asterisk completed.
 
 	c := NewCache(10)
 	wg := &sync.WaitGroup{}
