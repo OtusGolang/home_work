@@ -1,4 +1,4 @@
-package hw06pipelineexecution //nolint:golint,stylecheck
+package hw06pipelineexecution
 
 type (
 	In  = <-chan interface{}
