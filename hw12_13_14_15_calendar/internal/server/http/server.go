@@ -7,10 +7,13 @@ import (
 type Server struct { // TODO
 }
 
+type Logger interface { // TODO
+}
+
 type Application interface { // TODO
 }
 
-func NewServer(app Application) *Server {
+func NewServer(logger Logger, app Application) *Server {
 	return &Server{}
 }
 
