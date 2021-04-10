@@ -50,7 +50,6 @@ linters:
     - govet
     - ifshort
     - ineffassign
-    - interfacer
     - maligned
     - misspell
     - nestif
