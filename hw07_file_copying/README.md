@@ -34,4 +34,4 @@
 - `github.com/cheggaaa/pb`
 - `os.OpenFile`, `os.Create`, `os.FileMode`
 - `io.CopyN`
-- `ioutil.TempFile`
+- `os.CreateTemp`

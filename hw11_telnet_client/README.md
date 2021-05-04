@@ -101,6 +101,7 @@ back!
 #### Зачёт от 7 баллов
 
 ### Подсказки
+- Для ручного тестирования рекомендуется использовать nc (как в `test.sh`).
 - `flag.StringVar`, `flag.DurationVar`
 - `net.JoinHostPort`, `net.DialTimeout`
 - `bufio` / `io`

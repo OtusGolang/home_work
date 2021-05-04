@@ -79,3 +79,6 @@ nil <- (prev) front <-> ... <-> elem <-> ... <-> back (next) -> nil
 - https://en.wikipedia.org/wiki/Doubly_linked_list
 - https://ru.bmstu.wiki/LRU_(Least_Recently_Used)
 - `sync.Mutex`
+
+### Частые ошибки
+1) В задании со звёздочкой забывают про синхронизацию в методе Clear кэша.
