@@ -17,7 +17,6 @@ issues:
         - dupl
         - gocyclo
         - gosec
-        - scopelint
 
 linters:
   disable-all: true
@@ -50,7 +49,6 @@ linters:
     - govet
     - ifshort
     - ineffassign
-    - maligned
     - misspell
     - nestif
     - noctx
@@ -58,7 +56,6 @@ linters:
     - prealloc
     - predeclared
     - rowserrcheck
-    - scopelint
     - sqlclosecheck
     - staticcheck
     - structcheck
