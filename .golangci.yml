@@ -17,14 +17,12 @@ issues:
         - dupl
         - gocyclo
         - gosec
-        - scopelint
 
 linters:
   disable-all: true
   enable:
     - asciicheck
     - bodyclose
-    - deadcode
     - depguard
     - dogsled
     - dupl
@@ -50,7 +48,6 @@ linters:
     - govet
     - ifshort
     - ineffassign
-    - maligned
     - misspell
     - nestif
     - noctx
@@ -58,14 +55,11 @@ linters:
     - prealloc
     - predeclared
     - rowserrcheck
-    - scopelint
     - sqlclosecheck
     - staticcheck
-    - structcheck
     - stylecheck
     - typecheck
     - unconvert
     - unparam
-    - unused
     - varcheck
     - whitespace
