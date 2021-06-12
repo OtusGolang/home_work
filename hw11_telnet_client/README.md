@@ -102,7 +102,7 @@ back!
 
 ### Подсказки
 - Для ручного тестирования рекомендуется использовать nc (как в `test.sh`).
-- `flag.StringVar`, `flag.DurationVar`
+- `flag.DurationVar`
 - `net.JoinHostPort`, `net.DialTimeout`
 - `bufio` / `io`
 - `signal.NotifyContext`
