@@ -18,7 +18,7 @@ nil <- (prev) front <-> ... <-> elem <-> ... <-> back (next) -> nil
 - Remove(i *ListItem)                 // удалить элемент
 - MoveToFront(i *ListItem)            // переместить элемент в начало
 
-**Гарантируется, что методы Remove и MoveToFront вызываются от существующих в списке элементов.**
+**Считаем, что методы Remove и MoveToFront вызываются только от существующих в списке элементов.**
 
 Элемент списка ListItem:
 - Value interface{}  // значение
