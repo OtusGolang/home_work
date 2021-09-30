@@ -17,7 +17,7 @@ type lruCache struct {
 }
 
 type cacheItem struct {
-	key   string
+	key   Key
 	value interface{}
 }
 
