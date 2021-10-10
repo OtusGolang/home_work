@@ -1,4 +1,4 @@
-## Домашние задания курса OTUS «Разработчик Golang»
+## Домашние задания курса [OTUS «Разработчик Golang»](https://otus.ru/lessons/golang-professional/?utm_source=github&utm_medium=free&utm_campaign=otus)
 1) [«Hello, OTUS!»](./hw01_hello_otus)
 2) [«Распаковка строки»](./hw02_unpack_string)
 3) [«Частотный анализ»](./hw03_frequency_analysis)
