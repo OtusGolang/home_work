@@ -4,7 +4,7 @@ import "sync"
 
 type Storage struct {
 	// TODO
-	mu sync.RWMutex
+	mu sync.RWMutex //nolint:unused
 }
 
 func New() *Storage {

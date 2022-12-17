@@ -56,8 +56,6 @@ linters:
     - prealloc
     - predeclared
     - revive
-    - rowserrcheck
-    - sqlclosecheck
     - staticcheck
     - stylecheck
     - tagliatelle
@@ -66,5 +64,4 @@ linters:
     - unconvert
     - unparam
     - unused
-    - wastedassign
     - whitespace

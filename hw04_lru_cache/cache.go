@@ -16,11 +16,6 @@ type lruCache struct {
 	items    map[Key]*ListItem
 }
 
-type cacheItem struct {
-	key   Key
-	value interface{}
-}
-
 func NewCache(capacity int) Cache {
 	return &lruCache{
 		capacity: capacity,
