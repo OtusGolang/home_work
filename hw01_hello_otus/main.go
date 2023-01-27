@@ -1,5 +1,11 @@
 package main
 
+import (
+	"fmt"
+
+	"golang.org/x/text/unicode/bidi"
+)
+
 func main() {
-	// Place your code here.
+	fmt.Println(bidi.ReverseString("Hello Otus"))
 }
