@@ -6,14 +6,14 @@ Hello, OTUS!
 ```
 
 Для переворота строки следует воспользоваться возможностями
-[golang.org/x/example/stringutil](https://github.com/golang/example/tree/master/stringutil).
+[golang.org/x/example/hello/reverse](https://pkg.go.dev/golang.org/x/example/hello/reverse).
 
 Кроме этого необходимо исправить **go.mod** так, чтобы для данного модуля работала
 команда `go get`, а полученный **go.sum** закоммитить.
 
 ### Критерии оценки
 - Пайплайн зелёный - 4 балла
-- Используется `stringutil` - 4 балла
+- Используется `reverse` - 4 балла
 - Понятность и чистота кода - до 2 баллов
 
 #### Зачёт от 7 баллов
