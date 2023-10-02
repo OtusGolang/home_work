@@ -1,0 +1,12 @@
+nder Windows.
+
+You should also remove the Go bin directory from your PATH environment variable. Under Linux and FreeBSD you should edit /etc/profile or $HOME/.profile. If you installed Go with the macOS package then you should remove the /etc/paths.d/go file. Windows users should read the section about setting environment variables under Windows.
+
+Getting help
+For help, see the list of Go mailing lists, forums, and places to chat.
+
+Report bugs either by running “go bug”, or manually at the Go issue tracker.
+
+The Go Gopher
+Copyright Terms of Service Privacy Policy Report a website issue
+Supported by Google
