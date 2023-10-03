@@ -1,11 +1,8 @@
 package main
 
-import (
-	"fmt"
-
-	"golang.org/x/text/unicode/bidi"
-)
+import "fmt"
+import "golang.org/x/example/stringutil"
 
 func main() {
-	fmt.Println(bidi.ReverseString("Hello Otus"))
+	fmt.Println(stringutil.Reverse("Hello, OTUS!"))
 }
