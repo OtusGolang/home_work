@@ -43,6 +43,6 @@ $ FOO=123 BAR=value command arg1 arg2
 ### Подсказки
 - https://www.unix.com/man-page/debian/8/envdir/
 - `os.Args`
-- `ioutil.ReadDir`
+- `os.ReadDir`
 - `bytes.Replace`, `strings.TrimRight`
 - `exec.Command`
