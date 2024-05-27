@@ -20,10 +20,10 @@
 [Инструкция по сдаче ДЗ](https://github.com/OtusGolang/home_work/wiki#%D0%A1%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%B0%D0%BC).
 
 ---
-Используемая версия [golangci-lint](https://golangci-lint.run/usage/install/#other-ci): <b>v1.50.1</b>
+Используемая версия [golangci-lint](https://golangci-lint.run/usage/install/#other-ci): <b>v1.57.2</b>
 ```
 $ golangci-lint version
-golangci-lint has version 1.50.1 built from 8926a95 on 2022-10-22T10:48:48Z
+golangci-lint has version 1.57.2 built with go1.22.1 from 77a8601a on 2024-03-28T19:01:11Z
 ```
 
 ---
