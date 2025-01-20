@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: my-calendar-app
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
+
+resources: {}
+nodeSelector: {}
+affinity: {}
