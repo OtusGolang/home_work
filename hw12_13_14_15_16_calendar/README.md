@@ -9,5 +9,7 @@
 - `hw13_calendar` (от `hw12_calendar`) -> Merge Request в `hw12_calendar` (если уже вмержена, то в `master`)
 - `hw14_calendar` (от `hw13_calendar`) -> Merge Request в `hw13_calendar` (если уже вмержена, то в `master`)
 - `hw15_calendar` (от `hw14_calendar`) -> Merge Request в `hw14_calendar` (если уже вмержена, то в `master`)
+- `hw16_calendar` (от `hw15_calendar`) -> Merge Request в `hw15_calendar` (если уже вмержена, то в `master`)
 
-**Домашнее задание не принимается, если не принято ДЗ, предшедствующее ему.**
+
+**Домашнее задание не принимается, если не принято ДЗ, предшествующее ему.**
