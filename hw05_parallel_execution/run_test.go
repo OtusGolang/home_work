@@ -12,7 +12,7 @@ import (
 	"go.uber.org/goleak"
 )
 
-func TestRun(t *testing.T) {
+func TestRunHw5(t *testing.T) {
 	defer goleak.VerifyNone(t)
 
 	t.Run("if were errors in first M tasks, than finished not more N+M tasks", func(t *testing.T) {
@@ -31,8 +31,8 @@ func TestRun(t *testing.T) {
 		}
 
 		workersCount := 10
-		maxErrorsCount := 23
-		err := Run(tasks, workersCount, maxErrorsCount)
+		maxErrorsCount := 3
+		err := RunHw5(tasks, workersCount, maxErrorsCount)
 
 		require.Truef(t, errors.Is(err, ErrErrorsLimitExceeded), "actual err - %v", err)
 		require.LessOrEqual(t, runTasksCount, int32(workersCount+maxErrorsCount), "extra tasks were started")
@@ -60,7 +60,7 @@ func TestRun(t *testing.T) {
 		maxErrorsCount := 1
 
 		start := time.Now()
-		err := Run(tasks, workersCount, maxErrorsCount)
+		err := RunHw5(tasks, workersCount, maxErrorsCount)
 		elapsedTime := time.Since(start)
 		require.NoError(t, err)
 
