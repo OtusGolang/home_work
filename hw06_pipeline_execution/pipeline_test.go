@@ -14,8 +14,6 @@ const (
 	fault         = sleepPerStage / 2
 )
 
-var isFullTesting = true
-
 func TestPipeline(t *testing.T) {
 	// Stage generator
 	g := func(_ string, f func(v interface{}) interface{}) Stage {
@@ -96,9 +94,6 @@ func TestPipeline(t *testing.T) {
 }
 
 func TestAllStageStop(t *testing.T) {
-	if !isFullTesting {
-		return
-	}
 	wg := sync.WaitGroup{}
 	// Stage generator
 	g := func(_ string, f func(v interface{}) interface{}) Stage {
