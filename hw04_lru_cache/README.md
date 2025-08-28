@@ -77,7 +77,7 @@ nil <- (prev) front <-> ... <-> elem <-> ... <-> back (next) -> nil
 
 ### Подсказки
 - https://en.wikipedia.org/wiki/Doubly_linked_list
-- https://ru.bmstu.wiki/LRU_(Least_Recently_Used)
+- https://blog.skillfactory.ru/glossary/lru/
 - `sync.Mutex`
 
 ### Частые ошибки
